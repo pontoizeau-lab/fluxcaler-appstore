@@ -1,0 +1,120 @@
+{
+  "$schema": "../schema.json",
+  "name": "Supabase",
+  "id": "supabase",
+  "available": true,
+  "short_desc": "Open source Firebase alternative with PostgreSQL, Auth, Storage, and more",
+  "author": "Supabase",
+  "port": 8000,
+  "categories": ["database", "development", "ai"],
+  "description": "Supabase is an open source Firebase alternative. It includes PostgreSQL database, authentication, instant APIs, edge functions, realtime subscriptions, storage, and vector embeddings.",
+  "tipiVersion": 1,
+  "version": "latest",
+  "source": "https://github.com/supabase/supabase",
+  "website": "https://supabase.com",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Site URL",
+      "env_variable": "SITE_URL",
+      "default": "http://localhost:3000",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "PostgreSQL Password",
+      "env_variable": "POSTGRES_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "JWT Secret (min 32 chars)",
+      "env_variable": "JWT_SECRET",
+      "min": 32,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "Anon Key",
+      "env_variable": "ANON_KEY",
+      "min": 32,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "Service Role Key",
+      "env_variable": "SERVICE_ROLE_KEY",
+      "min": 32,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "text",
+      "label": "Dashboard Username",
+      "env_variable": "DASHBOARD_USERNAME",
+      "default": "admin",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Dashboard Password",
+      "env_variable": "DASHBOARD_PASSWORD",
+      "min": 8,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "boolean",
+      "label": "Enable Email Signup",
+      "env_variable": "ENABLE_EMAIL_SIGNUP",
+      "default": true
+    },
+    {
+      "type": "boolean",
+      "label": "Enable Email Autoconfirm",
+      "env_variable": "ENABLE_EMAIL_AUTOCONFIRM",
+      "default": true
+    },
+    {
+      "type": "text",
+      "label": "SMTP Host (optional)",
+      "env_variable": "SMTP_HOST",
+      "default": "",
+      "required": false
+    },
+    {
+      "type": "number",
+      "label": "SMTP Port",
+      "env_variable": "SMTP_PORT",
+      "default": 587,
+      "required": false
+    },
+    {
+      "type": "text",
+      "label": "SMTP User (optional)",
+      "env_variable": "SMTP_USER",
+      "default": "",
+      "required": false
+    },
+    {
+      "type": "password",
+      "label": "SMTP Password (optional)",
+      "env_variable": "SMTP_PASS",
+      "required": false
+    },
+    {
+      "type": "text",
+      "label": "SMTP Sender Email",
+      "env_variable": "SMTP_SENDER_EMAIL",
+      "default": "noreply@example.com",
+      "required": false
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

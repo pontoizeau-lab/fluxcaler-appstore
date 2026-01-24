@@ -1,0 +1,57 @@
+{
+  "$schema": "../schema.json",
+  "name": "MongoDB",
+  "id": "mongodb",
+  "available": true,
+  "short_desc": "Document database with Mongo Express admin interface",
+  "author": "MongoDB Inc.",
+  "port": 8081,
+  "categories": ["database", "data"],
+  "description": "MongoDB is a document-oriented NoSQL database. This package includes Mongo Express, a web-based admin interface for MongoDB management.",
+  "tipiVersion": 1,
+  "version": "latest",
+  "source": "https://github.com/mongodb/mongo",
+  "website": "https://www.mongodb.com",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "MongoDB Root Username",
+      "env_variable": "MONGO_ROOT_USER",
+      "default": "admin",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "MongoDB Root Password",
+      "env_variable": "MONGO_ROOT_PASSWORD",
+      "min": 12,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "text",
+      "label": "Default Database Name",
+      "env_variable": "MONGO_DATABASE",
+      "default": "fluxcaler",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Mongo Express Username",
+      "env_variable": "ME_BASIC_AUTH_USERNAME",
+      "default": "admin",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Mongo Express Password",
+      "env_variable": "ME_BASIC_AUTH_PASSWORD",
+      "min": 8,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

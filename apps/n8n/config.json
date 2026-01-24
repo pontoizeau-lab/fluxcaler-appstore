@@ -1,0 +1,49 @@
+{
+  "$schema": "../schema.json",
+  "name": "n8n",
+  "id": "n8n",
+  "available": true,
+  "short_desc": "Workflow automation platform for connecting apps and automating tasks",
+  "author": "n8n-io",
+  "port": 5678,
+  "categories": ["automation", "ai"],
+  "description": "n8n is a free and open fair-code licensed workflow automation tool. Easily automate tasks across different services with a visual workflow builder.",
+  "tipiVersion": 1,
+  "version": "latest",
+  "source": "https://github.com/n8n-io/n8n",
+  "website": "https://n8n.io",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "N8N Basic Auth User",
+      "env_variable": "N8N_BASIC_AUTH_USER",
+      "default": "admin",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "N8N Basic Auth Password",
+      "env_variable": "N8N_BASIC_AUTH_PASSWORD",
+      "min": 8,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "text",
+      "label": "Timezone",
+      "env_variable": "GENERIC_TIMEZONE",
+      "default": "Europe/Paris",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Webhook URL (optional)",
+      "env_variable": "WEBHOOK_URL",
+      "default": "",
+      "required": false
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}
