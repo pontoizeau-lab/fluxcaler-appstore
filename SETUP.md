@@ -116,14 +116,14 @@ sudo ./scripts/restart.sh
 
 Pour une intégration optimale, installez les apps dans cet ordre :
 
-1. **Supabase** (base de données principale)
-2. **MongoDB** (base documents)
-3. **Qdrant** (base vectorielle)
-4. **n8n** (orchestration)
+1. **fluxcaler-supabase** (base de données principale)
+2. **fluxcaler-mongodb** (base documents)
+3. **fluxcaler-qdrant** (base vectorielle)
+4. **fluxcaler-n8n** (orchestration)
 
-### Installation de Supabase
+### Installation de fluxcaler-supabase
 
-1. Dans l'App Store, recherchez **Supabase**
+1. Dans l'App Store, recherchez **fluxcaler-supabase**
 2. Cliquez sur **Install**
 3. Configurez les paramètres :
 
@@ -140,11 +140,16 @@ Pour une intégration optimale, installez les apps dans cet ordre :
 4. Cliquez sur **Install**
 5. Attendez le démarrage (2-5 minutes)
 
+**Ports exposés :**
+- API Gateway : `8010` (HTTP), `8444` (HTTPS)
+- Studio : `3002`
+- PostgreSQL : `5433`
+
 **Important** : Notez les clés générées, elles seront nécessaires pour les intégrations.
 
-### Installation de MongoDB
+### Installation de fluxcaler-mongodb
 
-1. Recherchez **MongoDB** dans l'App Store
+1. Recherchez **fluxcaler-mongodb** dans l'App Store
 2. Configurez :
 
 | Paramètre | Recommandation |
@@ -157,9 +162,13 @@ Pour une intégration optimale, installez les apps dans cet ordre :
 
 3. Installez et vérifiez via Mongo Express
 
-### Installation de Qdrant
+**Ports exposés :**
+- MongoDB : `27018`
+- Mongo Express : `8082`
 
-1. Recherchez **Qdrant** dans l'App Store
+### Installation de fluxcaler-qdrant
+
+1. Recherchez **fluxcaler-qdrant** dans l'App Store
 2. Configurez :
 
 | Paramètre | Recommandation |
@@ -167,11 +176,15 @@ Pour une intégration optimale, installez les apps dans cet ordre :
 | `QDRANT_API_KEY` | Générer (16+ chars) |
 | `QDRANT_ENABLE_GRPC` | `true` |
 
-3. Installez et vérifiez via le dashboard (`http://ip:6333/dashboard`)
+3. Installez et vérifiez via le dashboard (`http://ip:6335/dashboard`)
 
-### Installation de n8n
+**Ports exposés :**
+- REST API : `6335`
+- gRPC : `6336`
 
-1. Recherchez **n8n** dans l'App Store
+### Installation de fluxcaler-n8n
+
+1. Recherchez **fluxcaler-n8n** dans l'App Store
 2. Configurez :
 
 | Paramètre | Recommandation |
@@ -183,6 +196,8 @@ Pour une intégration optimale, installez les apps dans cet ordre :
 
 3. Installez et accédez à l'interface
 
+**Port exposé :** `5679`
+
 ## Configuration post-installation
 
 ### Connexion n8n vers les services
@@ -192,7 +207,7 @@ Pour une intégration optimale, installez les apps dans cet ordre :
 1. Dans n8n, allez dans **Settings** > **Credentials**
 2. Créez un nouveau credential **Supabase API**
 3. Configurez :
-   - **Host** : `http://supabase-kong:8000`
+   - **Host** : `http://fluxcaler-supabase-kong:8000`
    - **Service Role Key** : Votre `SERVICE_ROLE_KEY`
 
 #### Credentials Qdrant dans n8n
@@ -206,21 +221,21 @@ Pour une intégration optimale, installez les apps dans cet ordre :
 
 1. Créez un credential **MongoDB**
 2. Configurez :
-   - **Connection String** : `mongodb://admin:password@mongodb:27017/?authSource=admin`
+   - **Connection String** : `mongodb://admin:password@fluxcaler-mongodb:27017/?authSource=admin`
 
 ### Vérification des services
 
 ```bash
 # Status des conteneurs
-docker ps --filter "name=n8n" --filter "name=mongo" --filter "name=qdrant" --filter "name=supabase"
+docker ps --filter "name=fluxcaler"
 
 # Logs d'un service
-docker logs -f runtipi-n8n
+docker logs -f runtipi-fluxcaler-n8n
 
 # Santé des services
-curl http://localhost:5678/healthz     # n8n
-curl http://localhost:6333/readyz      # Qdrant
-curl http://localhost:8000/rest/v1/    # Supabase
+curl http://localhost:5679/healthz      # n8n
+curl http://localhost:6335/readyz       # Qdrant
+curl http://localhost:8010/rest/v1/     # Supabase
 ```
 
 ### Configuration DNS (optionnel)
@@ -228,11 +243,11 @@ curl http://localhost:8000/rest/v1/    # Supabase
 Pour un accès externe, configurez vos DNS :
 
 ```
-n8n.votre-domaine.com      -> IP:5678
-supabase.votre-domaine.com -> IP:8000
-studio.votre-domaine.com   -> IP:3001
-mongo.votre-domaine.com    -> IP:8081
-qdrant.votre-domaine.com   -> IP:6333
+n8n.votre-domaine.com      -> IP:5679
+supabase.votre-domaine.com -> IP:8010
+studio.votre-domaine.com   -> IP:3002
+mongo.votre-domaine.com    -> IP:8082
+qdrant.votre-domaine.com   -> IP:6335
 ```
 
 ### Reverse Proxy avec Traefik (optionnel)
@@ -253,10 +268,10 @@ ls /opt/runtipi/app-data/
 
 # Sauvegarde complète
 tar -czvf fluxcaler-backup-$(date +%Y%m%d).tar.gz \
-  /opt/runtipi/app-data/n8n \
-  /opt/runtipi/app-data/mongodb \
-  /opt/runtipi/app-data/qdrant \
-  /opt/runtipi/app-data/supabase
+  /opt/runtipi/app-data/fluxcaler-n8n \
+  /opt/runtipi/app-data/fluxcaler-mongodb \
+  /opt/runtipi/app-data/fluxcaler-qdrant \
+  /opt/runtipi/app-data/fluxcaler-supabase
 ```
 
 ### Restauration
@@ -275,7 +290,7 @@ tar -xzvf fluxcaler-backup-YYYYMMDD.tar.gz -C /
 
 ```bash
 # Vérifier les logs
-docker logs runtipi-<app-name>
+docker logs runtipi-fluxcaler-<app-name>
 
 # Vérifier les ressources
 docker stats
@@ -290,7 +305,7 @@ Les services communiquent via le réseau Docker `runtipi_tipi_main_network`. Vé
 docker network inspect runtipi_tipi_main_network
 
 # Tester la connectivité
-docker exec runtipi-n8n ping mongodb
+docker exec runtipi-fluxcaler-n8n ping fluxcaler-mongodb
 ```
 
 #### Supabase ne démarre pas complètement
@@ -299,14 +314,14 @@ Supabase a de nombreux services dépendants. Vérifiez l'ordre de démarrage :
 
 ```bash
 # Vérifier tous les conteneurs Supabase
-docker ps -a | grep supabase
+docker ps -a | grep fluxcaler-supabase
 
 # Redémarrer dans l'ordre
-docker restart supabase-db
+docker restart fluxcaler-supabase-db
 sleep 10
-docker restart supabase-auth supabase-rest
+docker restart fluxcaler-supabase-auth fluxcaler-supabase-rest
 sleep 5
-docker restart supabase-kong
+docker restart fluxcaler-supabase-kong
 ```
 
 #### Manque de mémoire
@@ -321,6 +336,20 @@ sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
 ```
+
+### Mapping des ports (référence rapide)
+
+| Service | Port Fluxcaler |
+|---------|----------------|
+| n8n | 5679 |
+| MongoDB | 27018 |
+| Mongo Express | 8082 |
+| Qdrant REST | 6335 |
+| Qdrant gRPC | 6336 |
+| Supabase Kong | 8010 |
+| Supabase Kong SSL | 8444 |
+| Supabase Studio | 3002 |
+| Supabase Postgres | 5433 |
 
 ### Support
 

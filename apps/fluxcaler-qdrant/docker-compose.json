@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "services": [
     {
-      "name": "qdrant",
+      "name": "fluxcaler-qdrant",
       "image": "qdrant/qdrant:latest",
       "internalPort": 6333,
       "isMain": true,
@@ -30,8 +30,13 @@
       },
       "addPorts": [
         {
+          "containerPort": 6333,
+          "hostPort": 6335,
+          "protocol": "tcp"
+        },
+        {
           "containerPort": 6334,
-          "hostPort": 6334,
+          "hostPort": 6336,
           "protocol": "tcp"
         }
       ]

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "services": [
     {
-      "name": "n8n",
+      "name": "fluxcaler-n8n",
       "image": "n8nio/n8n:latest",
       "internalPort": 5678,
       "isMain": true,
@@ -29,7 +29,14 @@
         "interval": "30s",
         "timeout": "10s",
         "retries": 3
-      }
+      },
+      "addPorts": [
+        {
+          "containerPort": 5678,
+          "hostPort": 5679,
+          "protocol": "tcp"
+        }
+      ]
     }
   ]
 }

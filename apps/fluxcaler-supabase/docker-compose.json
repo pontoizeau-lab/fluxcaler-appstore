@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "services": [
     {
-      "name": "supabase-db",
+      "name": "fluxcaler-supabase-db",
       "image": "supabase/postgres:latest",
       "internalPort": 5432,
       "isMain": false,
@@ -28,14 +28,21 @@
         "interval": "10s",
         "timeout": "5s",
         "retries": 5
-      }
+      },
+      "addPorts": [
+        {
+          "containerPort": 5432,
+          "hostPort": 5433,
+          "protocol": "tcp"
+        }
+      ]
     },
     {
-      "name": "supabase-kong",
+      "name": "fluxcaler-supabase-kong",
       "image": "kong:latest",
       "internalPort": 8000,
       "isMain": true,
-      "dependsOn": ["supabase-auth", "supabase-rest", "supabase-realtime", "supabase-storage", "supabase-meta"],
+      "dependsOn": ["fluxcaler-supabase-auth", "fluxcaler-supabase-rest", "fluxcaler-supabase-realtime", "fluxcaler-supabase-storage", "fluxcaler-supabase-meta"],
       "environment": {
         "KONG_DATABASE": "off",
         "KONG_DECLARATIVE_CONFIG": "/var/lib/kong/kong.yml",
@@ -57,24 +64,29 @@
       ],
       "addPorts": [
         {
+          "containerPort": 8000,
+          "hostPort": 8010,
+          "protocol": "tcp"
+        },
+        {
           "containerPort": 8443,
-          "hostPort": 8443,
+          "hostPort": 8444,
           "protocol": "tcp"
         }
       ]
     },
     {
-      "name": "supabase-auth",
+      "name": "fluxcaler-supabase-auth",
       "image": "supabase/gotrue:latest",
       "internalPort": 9999,
       "isMain": false,
-      "dependsOn": ["supabase-db"],
+      "dependsOn": ["fluxcaler-supabase-db"],
       "environment": {
         "GOTRUE_API_HOST": "0.0.0.0",
         "GOTRUE_API_PORT": "9999",
         "API_EXTERNAL_URL": "${SITE_URL}",
         "GOTRUE_DB_DRIVER": "postgres",
-        "GOTRUE_DB_DATABASE_URL": "postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@supabase-db:5432/postgres",
+        "GOTRUE_DB_DATABASE_URL": "postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres",
         "GOTRUE_SITE_URL": "${SITE_URL}",
         "GOTRUE_URI_ALLOW_LIST": "*",
         "GOTRUE_DISABLE_SIGNUP": "false",
@@ -103,13 +115,13 @@
       }
     },
     {
-      "name": "supabase-rest",
+      "name": "fluxcaler-supabase-rest",
       "image": "postgrest/postgrest:latest",
       "internalPort": 3000,
       "isMain": false,
-      "dependsOn": ["supabase-db"],
+      "dependsOn": ["fluxcaler-supabase-db"],
       "environment": {
-        "PGRST_DB_URI": "postgres://authenticator:${POSTGRES_PASSWORD}@supabase-db:5432/postgres",
+        "PGRST_DB_URI": "postgres://authenticator:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres",
         "PGRST_DB_SCHEMAS": "public,storage,graphql_public",
         "PGRST_DB_ANON_ROLE": "anon",
         "PGRST_JWT_SECRET": "${JWT_SECRET}",
@@ -125,14 +137,14 @@
       }
     },
     {
-      "name": "supabase-realtime",
+      "name": "fluxcaler-supabase-realtime",
       "image": "supabase/realtime:latest",
       "internalPort": 4000,
       "isMain": false,
-      "dependsOn": ["supabase-db"],
+      "dependsOn": ["fluxcaler-supabase-db"],
       "environment": {
         "PORT": "4000",
-        "DB_HOST": "supabase-db",
+        "DB_HOST": "fluxcaler-supabase-db",
         "DB_PORT": "5432",
         "DB_USER": "supabase_admin",
         "DB_PASSWORD": "${POSTGRES_PASSWORD}",
@@ -155,17 +167,17 @@
       }
     },
     {
-      "name": "supabase-storage",
+      "name": "fluxcaler-supabase-storage",
       "image": "supabase/storage-api:latest",
       "internalPort": 5000,
       "isMain": false,
-      "dependsOn": ["supabase-db", "supabase-imgproxy"],
+      "dependsOn": ["fluxcaler-supabase-db", "fluxcaler-supabase-imgproxy"],
       "environment": {
         "ANON_KEY": "${ANON_KEY}",
         "SERVICE_KEY": "${SERVICE_ROLE_KEY}",
-        "POSTGREST_URL": "http://supabase-rest:3000",
+        "POSTGREST_URL": "http://fluxcaler-supabase-rest:3000",
         "PGRST_JWT_SECRET": "${JWT_SECRET}",
-        "DATABASE_URL": "postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@supabase-db:5432/postgres",
+        "DATABASE_URL": "postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres",
         "FILE_SIZE_LIMIT": "52428800",
         "STORAGE_BACKEND": "file",
         "FILE_STORAGE_BACKEND_PATH": "/var/lib/storage",
@@ -173,7 +185,7 @@
         "REGION": "stub",
         "GLOBAL_S3_BUCKET": "stub",
         "ENABLE_IMAGE_TRANSFORMATION": "true",
-        "IMGPROXY_URL": "http://supabase-imgproxy:5001"
+        "IMGPROXY_URL": "http://fluxcaler-supabase-imgproxy:5001"
       },
       "volumes": [
         {
@@ -189,7 +201,7 @@
       }
     },
     {
-      "name": "supabase-imgproxy",
+      "name": "fluxcaler-supabase-imgproxy",
       "image": "darthsim/imgproxy:latest",
       "internalPort": 5001,
       "isMain": false,
@@ -214,14 +226,14 @@
       }
     },
     {
-      "name": "supabase-meta",
+      "name": "fluxcaler-supabase-meta",
       "image": "supabase/postgres-meta:latest",
       "internalPort": 8080,
       "isMain": false,
-      "dependsOn": ["supabase-db"],
+      "dependsOn": ["fluxcaler-supabase-db"],
       "environment": {
         "PG_META_PORT": "8080",
-        "PG_META_DB_HOST": "supabase-db",
+        "PG_META_DB_HOST": "fluxcaler-supabase-db",
         "PG_META_DB_PORT": "5432",
         "PG_META_DB_NAME": "postgres",
         "PG_META_DB_USER": "supabase_admin",
@@ -235,17 +247,17 @@
       }
     },
     {
-      "name": "supabase-studio",
+      "name": "fluxcaler-supabase-studio",
       "image": "supabase/studio:latest",
       "internalPort": 3000,
       "isMain": false,
-      "dependsOn": ["supabase-kong"],
+      "dependsOn": ["fluxcaler-supabase-kong"],
       "environment": {
-        "STUDIO_PG_META_URL": "http://supabase-meta:8080",
+        "STUDIO_PG_META_URL": "http://fluxcaler-supabase-meta:8080",
         "POSTGRES_PASSWORD": "${POSTGRES_PASSWORD}",
         "DEFAULT_ORGANIZATION_NAME": "Fluxcaler",
         "DEFAULT_PROJECT_NAME": "Default Project",
-        "SUPABASE_URL": "http://supabase-kong:8000",
+        "SUPABASE_URL": "http://fluxcaler-supabase-kong:8000",
         "SUPABASE_PUBLIC_URL": "${SITE_URL}",
         "SUPABASE_ANON_KEY": "${ANON_KEY}",
         "SUPABASE_SERVICE_KEY": "${SERVICE_ROLE_KEY}",
@@ -257,7 +269,7 @@
       "addPorts": [
         {
           "containerPort": 3000,
-          "hostPort": 3001,
+          "hostPort": 3002,
           "protocol": "tcp"
         }
       ]
