@@ -1,0 +1,41 @@
+{
+  "$schema": "../schema.json",
+  "name": "Qdrant",
+  "id": "qdrant",
+  "available": true,
+  "short_desc": "High-performance vector database for AI and semantic search",
+  "author": "Qdrant",
+  "port": 6333,
+  "categories": ["database", "ai"],
+  "description": "Qdrant is an open-source vector similarity search engine and database. It provides a production-ready service with a convenient API to store, search, and manage points with payloads and vectors.",
+  "tipiVersion": 1,
+  "version": "latest",
+  "source": "https://github.com/qdrant/qdrant",
+  "website": "https://qdrant.tech",
+  "exposable": true,
+  "url_suffix": "/dashboard",
+  "form_fields": [
+    {
+      "type": "password",
+      "label": "API Key",
+      "env_variable": "QDRANT_API_KEY",
+      "min": 16,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "boolean",
+      "label": "Enable gRPC",
+      "env_variable": "QDRANT_ENABLE_GRPC",
+      "default": true
+    },
+    {
+      "type": "number",
+      "label": "Max Collection Size (MB)",
+      "env_variable": "QDRANT_MAX_COLLECTION_SIZE_MB",
+      "default": 1024,
+      "required": false
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

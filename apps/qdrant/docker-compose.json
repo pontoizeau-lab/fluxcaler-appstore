@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "qdrant",
+      "image": "qdrant/qdrant:latest",
+      "internalPort": 6333,
+      "isMain": true,
+      "environment": {
+        "QDRANT__SERVICE__API_KEY": "${QDRANT_API_KEY}",
+        "QDRANT__SERVICE__GRPC_PORT": "6334",
+        "QDRANT__SERVICE__ENABLE_TLS": "false",
+        "QDRANT__LOG_LEVEL": "INFO"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/storage",
+          "containerPath": "/qdrant/storage"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/snapshots",
+          "containerPath": "/qdrant/snapshots"
+        }
+      ],
+      "healthCheck": {
+        "test": "wget --no-verbose --tries=1 --spider http://localhost:6333/readyz || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3
+      },
+      "addPorts": [
+        {
+          "containerPort": 6334,
+          "hostPort": 6334,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  ]
+}
