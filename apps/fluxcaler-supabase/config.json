@@ -6,7 +6,7 @@
   "short_desc": "Open source Firebase alternative with PostgreSQL, Auth, Storage, and more",
   "author": "Supabase",
   "port": 8010,
-  "categories": ["database", "development", "ai"],
+  "categories": ["development", "ai", "data"],
   "description": "Supabase is an open source Firebase alternative. It includes PostgreSQL database, authentication, instant APIs, edge functions, realtime subscriptions, storage, and vector embeddings.",
   "min_tipi_version": "4.0.0",
   "tipi_version": 1,
