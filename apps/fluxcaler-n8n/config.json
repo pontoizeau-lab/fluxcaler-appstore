@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema.json",
   "name": "Fluxcaler n8n",
   "id": "fluxcaler-n8n",
   "available": true,
@@ -8,7 +7,8 @@
   "port": 5679,
   "categories": ["automation", "ai"],
   "description": "n8n is a free and open fair-code licensed workflow automation tool. Easily automate tasks across different services with a visual workflow builder.",
-  "tipiVersion": 1,
+  "min_tipi_version": "4.0.0",
+  "dynamic_config": true,
   "version": "latest",
   "source": "https://github.com/n8n-io/n8n",
   "website": "https://n8n.io",
