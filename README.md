@@ -6,10 +6,10 @@ Stack d'applications IA souveraine et auto-hébergeable pour [Runtipi](https://r
 
 | Application | Description | Port | Catégorie |
 |-------------|-------------|------|-----------|
-| **n8n** | Automatisation de workflows visuels | 5678 | Automation |
-| **MongoDB** | Base de données documents + Mongo Express | 8081 | Database |
-| **Qdrant** | Base de données vectorielle pour IA | 6333, 6334 | AI/Database |
-| **Supabase** | Backend complet (Postgres, Auth, REST, Realtime, Storage) | 8000, 3001 | Backend |
+| **fluxcaler-n8n** | Automatisation de workflows visuels | 5679 | Automation |
+| **fluxcaler-mongodb** | Base de données documents + Mongo Express | 27018, 8082 | Database |
+| **fluxcaler-qdrant** | Base de données vectorielle pour IA | 6335, 6336 | AI/Database |
+| **fluxcaler-supabase** | Backend complet (Postgres, Auth, REST, Realtime, Storage) | 8010, 8444, 3002, 5433 | Backend |
 
 ## Architecture
 
@@ -18,23 +18,25 @@ Stack d'applications IA souveraine et auto-hébergeable pour [Runtipi](https://r
 │                        FLUXCALER STACK                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ┌─────────┐    ┌──────────────────────────────────────────┐   │
-│  │   n8n   │───▶│              ORCHESTRATION               │   │
-│  │ :5678   │    │   Workflows • Webhooks • Scheduling      │   │
-│  └────┬────┘    └──────────────────────────────────────────┘   │
-│       │                                                         │
-│       ▼                                                         │
+│  ┌─────────────┐    ┌──────────────────────────────────────┐   │
+│  │ fluxcaler-  │───▶│              ORCHESTRATION           │   │
+│  │    n8n      │    │   Workflows • Webhooks • Scheduling  │   │
+│  │   :5679     │    └──────────────────────────────────────┘   │
+│  └─────┬───────┘                                                │
+│        │                                                        │
+│        ▼                                                        │
 │  ┌─────────────────────────────────────────────────────────┐   │
 │  │                      DATA LAYER                          │   │
 │  │                                                          │   │
-│  │  ┌──────────┐   ┌──────────┐   ┌────────────────────┐   │   │
-│  │  │ MongoDB  │   │  Qdrant  │   │     Supabase       │   │   │
-│  │  │  :27017  │   │  :6333   │   │  PostgreSQL :5432  │   │   │
-│  │  │  :8081   │   │  :6334   │   │  Kong API   :8000  │   │   │
-│  │  │ (Express)│   │(Dashboard)│   │  Studio     :3001  │   │   │
-│  │  └──────────┘   └──────────┘   └────────────────────┘   │   │
+│  │  ┌──────────────┐ ┌──────────────┐ ┌─────────────────┐  │   │
+│  │  │  fluxcaler-  │ │  fluxcaler-  │ │   fluxcaler-    │  │   │
+│  │  │   mongodb    │ │    qdrant    │ │    supabase     │  │   │
+│  │  │   :27018     │ │    :6335     │ │  Postgres :5433 │  │   │
+│  │  │   :8082      │ │    :6336     │ │  Kong API :8010 │  │   │
+│  │  │  (Express)   │ │  (Dashboard) │ │  Studio   :3002 │  │   │
+│  │  └──────────────┘ └──────────────┘ └─────────────────┘  │   │
 │  │                                                          │   │
-│  │  Documents      Vectors/RAG      Auth • REST • Realtime │   │
+│  │  Documents        Vectors/RAG      Auth • REST • Realtime│   │
 │  └─────────────────────────────────────────────────────────┘   │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
@@ -63,9 +65,15 @@ Stack d'applications IA souveraine et auto-hébergeable pour [Runtipi](https://r
 - **Chiffrement** : Support TLS/SSL pour toutes les connexions
 - **Mises à jour contrôlées** : Vous décidez quand mettre à jour
 
+### Aucun conflit de ports
+
+- **Préfixe fluxcaler-** : Toutes les apps sont préfixées pour éviter les conflits
+- **Ports décalés** : Ports uniques pour cohabiter avec d'autres installations
+- **Isolation complète** : Fonctionne indépendamment de l'app store officiel
+
 ## Applications détaillées
 
-### n8n - Workflow Automation
+### fluxcaler-n8n - Workflow Automation
 
 Plateforme d'automatisation visuelle permettant de créer des workflows complexes sans code.
 
@@ -75,7 +83,7 @@ Plateforme d'automatisation visuelle permettant de créer des workflows complexe
 - Orchestration de services IA
 - Automatisation de tâches répétitives
 
-### MongoDB + Mongo Express
+### fluxcaler-mongodb - MongoDB + Mongo Express
 
 Base de données NoSQL orientée documents avec interface d'administration web.
 
@@ -85,7 +93,7 @@ Base de données NoSQL orientée documents avec interface d'administration web.
 - Cache applicatif
 - Données semi-structurées
 
-### Qdrant
+### fluxcaler-qdrant - Vector Database
 
 Base de données vectorielle haute performance pour l'IA et la recherche sémantique.
 
@@ -95,19 +103,19 @@ Base de données vectorielle haute performance pour l'IA et la recherche sémant
 - Systèmes de recommandation
 - Classification automatique
 
-### Supabase
+### fluxcaler-supabase - Backend Complet
 
 Alternative open source à Firebase avec PostgreSQL, authentification, APIs automatiques et temps réel.
 
 **Composants inclus :**
-- PostgreSQL avec pgvector
-- Kong API Gateway
+- PostgreSQL avec pgvector (port 5433)
+- Kong API Gateway (port 8010, 8444)
 - GoTrue (Auth)
 - PostgREST (API REST)
 - Realtime (WebSockets)
 - Storage (fichiers)
 - ImgProxy (transformation images)
-- Studio (interface admin)
+- Studio (interface admin, port 3002)
 
 ## Installation rapide
 
@@ -127,7 +135,7 @@ Alternative open source à Firebase avec PostgreSQL, authentification, APIs auto
 ### Installation des apps
 
 1. Allez dans l'**App Store**
-2. Filtrez par catégorie ou recherchez
+2. Filtrez par catégorie ou recherchez "fluxcaler"
 3. Cliquez sur l'application souhaitée
 4. Configurez les paramètres (ports, mots de passe)
 5. Cliquez sur **Installer**
@@ -138,19 +146,19 @@ Alternative open source à Firebase avec PostgreSQL, authentification, APIs auto
 
 Pour une stack complète, installez dans cet ordre :
 
-1. **Supabase** - Backend et base PostgreSQL
-2. **MongoDB** - Base documents complémentaire
-3. **Qdrant** - Base vectorielle pour IA
-4. **n8n** - Orchestration (connecter aux services précédents)
+1. **fluxcaler-supabase** - Backend et base PostgreSQL
+2. **fluxcaler-mongodb** - Base documents complémentaire
+3. **fluxcaler-qdrant** - Base vectorielle pour IA
+4. **fluxcaler-n8n** - Orchestration (connecter aux services précédents)
 
 ### Ressources minimum
 
 | Application | RAM | CPU | Stockage |
 |-------------|-----|-----|----------|
-| n8n | 512MB | 0.5 | 1GB |
-| MongoDB | 1GB | 0.5 | 5GB+ |
-| Qdrant | 1GB | 1 | 5GB+ |
-| Supabase | 2GB | 2 | 10GB+ |
+| fluxcaler-n8n | 512MB | 0.5 | 1GB |
+| fluxcaler-mongodb | 1GB | 0.5 | 5GB+ |
+| fluxcaler-qdrant | 1GB | 1 | 5GB+ |
+| fluxcaler-supabase | 2GB | 2 | 10GB+ |
 | **Total** | **4.5GB** | **4** | **21GB+** |
 
 ## Intégrations
@@ -160,7 +168,7 @@ Pour une stack complète, installez dans cet ordre :
 ```javascript
 // Exemple de node HTTP Request
 {
-  "url": "http://supabase-kong:8000/rest/v1/table",
+  "url": "http://fluxcaler-supabase-kong:8000/rest/v1/table",
   "headers": {
     "apikey": "{{$env.SUPABASE_ANON_KEY}}",
     "Authorization": "Bearer {{$env.SUPABASE_ANON_KEY}}"
@@ -173,7 +181,7 @@ Pour une stack complète, installez dans cet ordre :
 ```javascript
 // Recherche vectorielle
 {
-  "url": "http://qdrant:6333/collections/docs/points/search",
+  "url": "http://fluxcaler-qdrant:6333/collections/docs/points/search",
   "headers": {
     "api-key": "{{$env.QDRANT_API_KEY}}"
   },
@@ -188,8 +196,22 @@ Pour une stack complète, installez dans cet ordre :
 
 ```javascript
 // Connection string
-"mongodb://admin:password@mongodb:27017/fluxcaler?authSource=admin"
+"mongodb://admin:password@fluxcaler-mongodb:27017/fluxcaler?authSource=admin"
 ```
+
+## Mapping des ports
+
+| Service | Port standard | Port Fluxcaler |
+|---------|---------------|----------------|
+| n8n | 5678 | 5679 |
+| MongoDB | 27017 | 27018 |
+| Mongo Express | 8081 | 8082 |
+| Qdrant REST | 6333 | 6335 |
+| Qdrant gRPC | 6334 | 6336 |
+| Supabase Kong | 8000 | 8010 |
+| Supabase Kong SSL | 8443 | 8444 |
+| Supabase Studio | 3001 | 3002 |
+| Supabase Postgres | 5432 | 5433 |
 
 ## Support
 

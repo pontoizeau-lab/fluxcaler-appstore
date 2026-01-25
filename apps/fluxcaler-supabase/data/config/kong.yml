@@ -36,7 +36,7 @@ basicauth_credentials:
 services:
   ## Open Auth routes
   - name: auth-v1-open
-    url: http://supabase-auth:9999/verify
+    url: http://fluxcaler-supabase-auth:9999/verify
     routes:
       - name: auth-v1-open
         strip_path: true
@@ -45,7 +45,7 @@ services:
     plugins:
       - name: cors
   - name: auth-v1-open-callback
-    url: http://supabase-auth:9999/callback
+    url: http://fluxcaler-supabase-auth:9999/callback
     routes:
       - name: auth-v1-open-callback
         strip_path: true
@@ -54,7 +54,7 @@ services:
     plugins:
       - name: cors
   - name: auth-v1-open-authorize
-    url: http://supabase-auth:9999/authorize
+    url: http://fluxcaler-supabase-auth:9999/authorize
     routes:
       - name: auth-v1-open-authorize
         strip_path: true
@@ -65,8 +65,8 @@ services:
 
   ## Secure Auth routes
   - name: auth-v1
-    _comment: "GoTrue: /auth/v1/* -> http://supabase-auth:9999/*"
-    url: http://supabase-auth:9999/
+    _comment: "GoTrue: /auth/v1/* -> http://fluxcaler-supabase-auth:9999/*"
+    url: http://fluxcaler-supabase-auth:9999/
     routes:
       - name: auth-v1-all
         strip_path: true
@@ -86,8 +86,8 @@ services:
 
   ## Secure REST routes
   - name: rest-v1
-    _comment: "PostgREST: /rest/v1/* -> http://supabase-rest:3000/*"
-    url: http://supabase-rest:3000/
+    _comment: "PostgREST: /rest/v1/* -> http://fluxcaler-supabase-rest:3000/*"
+    url: http://fluxcaler-supabase-rest:3000/
     routes:
       - name: rest-v1-all
         strip_path: true
@@ -107,8 +107,8 @@ services:
 
   ## Secure GraphQL routes
   - name: graphql-v1
-    _comment: "pg_graphql: /graphql/v1/* -> http://supabase-rest:3000/rpc/graphql"
-    url: http://supabase-rest:3000/rpc/graphql
+    _comment: "pg_graphql: /graphql/v1/* -> http://fluxcaler-supabase-rest:3000/rpc/graphql"
+    url: http://fluxcaler-supabase-rest:3000/rpc/graphql
     routes:
       - name: graphql-v1-all
         strip_path: true
@@ -133,8 +133,8 @@ services:
 
   ## Secure Realtime routes
   - name: realtime-v1
-    _comment: "Realtime: /realtime/v1/* -> ws://supabase-realtime:4000/socket/*"
-    url: http://supabase-realtime:4000/socket/
+    _comment: "Realtime: /realtime/v1/* -> ws://fluxcaler-supabase-realtime:4000/socket/*"
+    url: http://fluxcaler-supabase-realtime:4000/socket/
     routes:
       - name: realtime-v1-all
         strip_path: true
@@ -154,8 +154,8 @@ services:
 
   ## Storage routes
   - name: storage-v1
-    _comment: "Storage: /storage/v1/* -> http://supabase-storage:5000/*"
-    url: http://supabase-storage:5000/
+    _comment: "Storage: /storage/v1/* -> http://fluxcaler-supabase-storage:5000/*"
+    url: http://fluxcaler-supabase-storage:5000/
     routes:
       - name: storage-v1-all
         strip_path: true
@@ -175,8 +175,8 @@ services:
 
   ## Secure Database routes
   - name: meta
-    _comment: "pg-meta: /pg/* -> http://supabase-meta:8080/*"
-    url: http://supabase-meta:8080/
+    _comment: "pg-meta: /pg/* -> http://fluxcaler-supabase-meta:8080/*"
+    url: http://fluxcaler-supabase-meta:8080/
     routes:
       - name: meta-all
         strip_path: true
@@ -194,8 +194,8 @@ services:
 
   ## Protected Dashboard
   - name: dashboard
-    _comment: "Studio: /* -> http://supabase-studio:3000/*"
-    url: http://supabase-studio:3000/
+    _comment: "Studio: /* -> http://fluxcaler-supabase-studio:3000/*"
+    url: http://fluxcaler-supabase-studio:3000/
     routes:
       - name: dashboard-all
         strip_path: true
