@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema.json",
   "name": "Fluxcaler Qdrant",
   "id": "fluxcaler-qdrant",
   "available": true,
@@ -8,7 +7,8 @@
   "port": 6335,
   "categories": ["database", "ai"],
   "description": "Qdrant is an open-source vector similarity search engine and database. It provides a production-ready service with a convenient API to store, search, and manage points with payloads and vectors.",
-  "tipiVersion": 1,
+  "min_tipi_version": "4.0.0",
+  "dynamic_config": true,
   "version": "latest",
   "source": "https://github.com/qdrant/qdrant",
   "website": "https://qdrant.tech",
