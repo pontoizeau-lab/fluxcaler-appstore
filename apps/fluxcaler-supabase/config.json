@@ -1,4 +1,5 @@
 {
+  "$schema": "../app-info-schema.json",
   "name": "Fluxcaler Supabase",
   "id": "fluxcaler-supabase",
   "available": true,
@@ -8,6 +9,7 @@
   "categories": ["database", "development", "ai"],
   "description": "Supabase is an open source Firebase alternative. It includes PostgreSQL database, authentication, instant APIs, edge functions, realtime subscriptions, storage, and vector embeddings.",
   "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
   "dynamic_config": true,
   "version": "latest",
   "source": "https://github.com/supabase/supabase",
