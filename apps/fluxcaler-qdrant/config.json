@@ -6,7 +6,7 @@
   "short_desc": "High-performance vector database for AI and semantic search",
   "author": "Qdrant",
   "port": 6335,
-  "categories": ["database", "ai"],
+  "categories": ["ai", "data"],
   "description": "Qdrant is an open-source vector similarity search engine and database. It provides a production-ready service with a convenient API to store, search, and manage points with payloads and vectors.",
   "min_tipi_version": "4.0.0",
   "tipi_version": 1,

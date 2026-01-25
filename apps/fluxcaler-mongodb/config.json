@@ -6,7 +6,7 @@
   "short_desc": "Document database with Mongo Express admin interface",
   "author": "MongoDB Inc.",
   "port": 8082,
-  "categories": ["database", "data"],
+  "categories": ["data", "utilities"],
   "description": "MongoDB is a document-oriented NoSQL database. This package includes Mongo Express, a web-based admin interface for MongoDB management.",
   "min_tipi_version": "4.0.0",
   "tipi_version": 1,
