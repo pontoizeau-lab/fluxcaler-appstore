@@ -1,0 +1,21 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler n8n Staging",
+  "id": "fluxcaler-n8n-staging",
+  "available": true,
+  "short_desc": "n8n staging instance for Fluxcaler Scale plan — test workflows before production",
+  "author": "n8n-io",
+  "port": 5681,
+  "categories": ["automation", "development"],
+  "description": "n8n staging instance for Fluxcaler Scale plan. Test and validate workflows before deploying to production on the main instance (port 5679).",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "latest",
+  "source": "https://github.com/n8n-io/n8n",
+  "website": "https://n8n.io",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [],
+  "supported_architectures": ["amd64", "arm64"]
+}
