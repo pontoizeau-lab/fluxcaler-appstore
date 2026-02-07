@@ -4,12 +4,14 @@ Stack d'applications IA souveraine et auto-hébergeable pour [Runtipi](https://r
 
 ## Stack Fluxcaler AI
 
-| Application | Description | Port | Catégorie |
-|-------------|-------------|------|-----------|
-| **fluxcaler-n8n** | Automatisation de workflows visuels | 5679 | Automation |
-| **fluxcaler-mongodb** | Base de données documents + Mongo Express | 27018, 8082 | Database |
-| **fluxcaler-qdrant** | Base de données vectorielle pour IA | 6335, 6336 | AI/Database |
-| **fluxcaler-supabase** | Backend complet (Postgres, Auth, REST, Realtime, Storage) | 8010, 8444, 3002, 5433 | Backend |
+| App | Port(s) | Description |
+|---|---|---|
+| **fluxcaler-n8n** | 5679 | n8n Client (production) |
+| **fluxcaler-n8n-staging** | 5681 | n8n Staging/Test (plan Scale) |
+| **fluxcaler-qdrant** | 6335 (REST), 6336 (gRPC) | Qdrant vectoriel client |
+| **fluxcaler-mongodb** | 27018, 8082 | MongoDB + Mongo Express |
+| **fluxcaler-supabase** | 3002, 5433, 8010, 8444 | Supabase complet |
+| **fluxcaler-nextcloud** | 8890 | Nextcloud fichiers |
 
 ## Architecture
 
@@ -18,13 +20,13 @@ Stack d'applications IA souveraine et auto-hébergeable pour [Runtipi](https://r
 │                        FLUXCALER STACK                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ┌─────────────┐    ┌──────────────────────────────────────┐   │
-│  │ fluxcaler-  │───▶│              ORCHESTRATION           │   │
-│  │    n8n      │    │   Workflows • Webhooks • Scheduling  │   │
-│  │   :5679     │    └──────────────────────────────────────┘   │
-│  └─────┬───────┘                                                │
-│        │                                                        │
-│        ▼                                                        │
+│  ┌─────────────┐  ┌─────────────┐  ┌──────────────────────┐   │
+│  │ fluxcaler-  │  │ fluxcaler-  │  │     ORCHESTRATION    │   │
+│  │    n8n      │──│ n8n-staging │─▶│ Workflows • Webhooks │   │
+│  │   :5679     │  │   :5681     │  │    • Scheduling      │   │
+│  └─────┬───────┘  └─────┬───────┘  └──────────────────────┘   │
+│        │                │                                      │
+│        ▼                ▼                                      │
 │  ┌─────────────────────────────────────────────────────────┐   │
 │  │                      DATA LAYER                          │   │
 │  │                                                          │   │
@@ -37,6 +39,14 @@ Stack d'applications IA souveraine et auto-hébergeable pour [Runtipi](https://r
 │  │  └──────────────┘ └──────────────┘ └─────────────────┘  │   │
 │  │                                                          │   │
 │  │  Documents        Vectors/RAG      Auth • REST • Realtime│   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │                     FILES LAYER                          │   │
+│  │  ┌──────────────────────────────────────────────────┐   │   │
+│  │  │  fluxcaler-nextcloud  :8890                      │   │   │
+│  │  │  Documents • Partage • Collaboration             │   │   │
+│  │  └──────────────────────────────────────────────────┘   │   │
 │  └─────────────────────────────────────────────────────────┘   │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
@@ -83,6 +93,16 @@ Plateforme d'automatisation visuelle permettant de créer des workflows complexe
 - Orchestration de services IA
 - Automatisation de tâches répétitives
 
+### fluxcaler-n8n-staging - Workflow Automation (Staging)
+
+Instance n8n de staging/test pour les clients Fluxcaler plan Scale. Permet de tester et valider les workflows avant déploiement en production.
+
+**Cas d'usage :**
+- Validation de workflows avant mise en production
+- Tests d'intégration avec des APIs externes
+- Développement de nouveaux pipelines
+- Formation et expérimentation sans risque
+
 ### fluxcaler-mongodb - MongoDB + Mongo Express
 
 Base de données NoSQL orientée documents avec interface d'administration web.
@@ -117,6 +137,16 @@ Alternative open source à Firebase avec PostgreSQL, authentification, APIs auto
 - ImgProxy (transformation images)
 - Studio (interface admin, port 3002)
 
+### fluxcaler-nextcloud - File Management
+
+Instance Nextcloud pour la gestion de fichiers clients Fluxcaler. Partage de documents, fichiers projet et collaboration.
+
+**Cas d'usage :**
+- Partage de documents projet avec les clients
+- Stockage centralisé de fichiers d'entreprise
+- Collaboration sur des documents en temps réel
+- Sauvegarde et archivage de données
+
 ## Installation rapide
 
 ### Prérequis
@@ -149,17 +179,21 @@ Pour une stack complète, installez dans cet ordre :
 1. **fluxcaler-supabase** - Backend et base PostgreSQL
 2. **fluxcaler-mongodb** - Base documents complémentaire
 3. **fluxcaler-qdrant** - Base vectorielle pour IA
-4. **fluxcaler-n8n** - Orchestration (connecter aux services précédents)
+4. **fluxcaler-nextcloud** - Gestion de fichiers
+5. **fluxcaler-n8n** - Orchestration production (connecter aux services précédents)
+6. **fluxcaler-n8n-staging** - Orchestration staging (plan Scale)
 
 ### Ressources minimum
 
 | Application | RAM | CPU | Stockage |
 |-------------|-----|-----|----------|
 | fluxcaler-n8n | 512MB | 0.5 | 1GB |
+| fluxcaler-n8n-staging | 512MB | 0.5 | 1GB |
 | fluxcaler-mongodb | 1GB | 0.5 | 5GB+ |
 | fluxcaler-qdrant | 1GB | 1 | 5GB+ |
 | fluxcaler-supabase | 2GB | 2 | 10GB+ |
-| **Total** | **4.5GB** | **4** | **21GB+** |
+| fluxcaler-nextcloud | 512MB | 0.5 | 10GB+ |
+| **Total** | **5.5GB** | **5** | **32GB+** |
 
 ## Intégrations
 
@@ -203,7 +237,8 @@ Pour une stack complète, installez dans cet ordre :
 
 | Service | Port standard | Port Fluxcaler |
 |---------|---------------|----------------|
-| n8n | 5678 | 5679 |
+| n8n (production) | 5678 | 5679 |
+| n8n (staging) | 5678 | 5681 |
 | MongoDB | 27017 | 27018 |
 | Mongo Express | 8081 | 8082 |
 | Qdrant REST | 6333 | 6335 |
@@ -212,6 +247,7 @@ Pour une stack complète, installez dans cet ordre :
 | Supabase Kong SSL | 8443 | 8444 |
 | Supabase Studio | 3001 | 3002 |
 | Supabase Postgres | 5432 | 5433 |
+| Nextcloud | 80 | 8890 |
 
 ## Support
 

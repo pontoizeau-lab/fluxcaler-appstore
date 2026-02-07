@@ -1,0 +1,37 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler Nextcloud",
+  "id": "fluxcaler-nextcloud",
+  "available": true,
+  "short_desc": "Nextcloud file management for Fluxcaler clients",
+  "author": "Nextcloud",
+  "port": 8890,
+  "categories": ["files", "productivity"],
+  "description": "Nextcloud instance for Fluxcaler client file management. Document sharing, project files and collaboration. Accessible via Cloudflare Tunnel.",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "latest",
+  "source": "https://github.com/nextcloud/server",
+  "website": "https://nextcloud.com",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Admin Username",
+      "env_variable": "NEXTCLOUD_ADMIN_USER",
+      "default": "admin",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Admin Password",
+      "env_variable": "NEXTCLOUD_ADMIN_PASSWORD",
+      "min": 8,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fluxcaler-nextcloud",
+      "image": "nextcloud:latest",
+      "internalPort": 80,
+      "isMain": true,
+      "environment": {
+        "NEXTCLOUD_TRUSTED_DOMAINS": "*",
+        "OVERWRITEPROTOCOL": "https",
+        "NEXTCLOUD_ADMIN_USER": "${NEXTCLOUD_ADMIN_USER}",
+        "NEXTCLOUD_ADMIN_PASSWORD": "${NEXTCLOUD_ADMIN_PASSWORD}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nextcloud",
+          "containerPath": "/var/www/html"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nextcloud_data",
+          "containerPath": "/var/www/html/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:80/status.php || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3
+      },
+      "addPorts": [
+        {
+          "containerPort": 80,
+          "hostPort": 8890,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  ]
+}
