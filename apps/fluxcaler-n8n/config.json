@@ -45,6 +45,13 @@
       "env_variable": "WEBHOOK_URL",
       "default": "",
       "required": false
+    },
+    {
+      "type": "text",
+      "label": "Secure Cookie",
+      "env_variable": "N8N_SECURE_COOKIE",
+      "default": "false",
+      "required": true
     }
   ],
   "supported_architectures": ["amd64", "arm64"]
