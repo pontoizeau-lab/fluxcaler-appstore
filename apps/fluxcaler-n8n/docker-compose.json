@@ -1,23 +1,23 @@
 {
-  "schemaVersion": 2,
   "services": [
     {
       "name": "fluxcaler-n8n",
       "image": "n8nio/n8n:latest",
       "internalPort": 5678,
       "isMain": true,
-      "environment": {
-        "N8N_BASIC_AUTH_ACTIVE": "true",
-        "N8N_BASIC_AUTH_USER": "${N8N_BASIC_AUTH_USER}",
-        "N8N_BASIC_AUTH_PASSWORD": "${N8N_BASIC_AUTH_PASSWORD}",
-        "GENERIC_TIMEZONE": "${GENERIC_TIMEZONE}",
-        "TZ": "${GENERIC_TIMEZONE}",
-        "WEBHOOK_URL": "${WEBHOOK_URL}",
-        "N8N_HOST": "${APP_DOMAIN}",
-        "N8N_PROTOCOL": "https",
-        "N8N_PORT": "5678",
-        "NODE_ENV": "production"
-      },
+      "environment": [
+        "N8N_BASIC_AUTH_ACTIVE=true",
+        "N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}",
+        "N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}",
+        "GENERIC_TIMEZONE=${GENERIC_TIMEZONE}",
+        "TZ=${GENERIC_TIMEZONE}",
+        "WEBHOOK_URL=${WEBHOOK_URL}",
+        "N8N_HOST=${APP_DOMAIN}",
+        "N8N_PROTOCOL=https",
+        "N8N_PORT=5678",
+        "NODE_ENV=production",
+        "N8N_SECURE_COOKIE=false"
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data",
