@@ -6,7 +6,7 @@
   "short_desc": "Nextcloud file management for Fluxcaler clients",
   "author": "Nextcloud",
   "port": 8890,
-  "categories": ["files", "productivity"],
+  "categories": ["utilities", "data"],
   "description": "Nextcloud instance for Fluxcaler client file management. Document sharing, project files and collaboration. Accessible via Cloudflare Tunnel.",
   "min_tipi_version": "4.0.0",
   "tipi_version": 1,
