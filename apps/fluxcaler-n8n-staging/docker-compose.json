@@ -1,5 +1,4 @@
 {
-  
   "services": [
     {
       "name": "fluxcaler-n8n-staging",
@@ -11,9 +10,9 @@
         "N8N_PROTOCOL=http",
         "WEBHOOK_URL=http://localhost:5681/",
         "N8N_DIAGNOSTICS_ENABLED=false",
-        "N8N_SECURE_COOKIE=false",
         "GENERIC_TIMEZONE=${TZ}",
-        "TZ=${TZ}"
+        "TZ=${TZ}",
+        "N8N_SECURE_COOKIE=false"
       ],
       "volumes": [
         {
