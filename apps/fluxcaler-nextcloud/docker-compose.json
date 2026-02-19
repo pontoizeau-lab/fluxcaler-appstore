@@ -1,17 +1,16 @@
 {
-  
   "services": [
     {
       "name": "fluxcaler-nextcloud",
       "image": "nextcloud:latest",
       "internalPort": 80,
       "isMain": true,
-      "environment": {
-        "NEXTCLOUD_TRUSTED_DOMAINS": "*",
-        "OVERWRITEPROTOCOL": "https",
-        "NEXTCLOUD_ADMIN_USER": "${NEXTCLOUD_ADMIN_USER}",
-        "NEXTCLOUD_ADMIN_PASSWORD": "${NEXTCLOUD_ADMIN_PASSWORD}"
-      },
+      "environment": [
+        "NEXTCLOUD_TRUSTED_DOMAINS=*",
+        "OVERWRITEPROTOCOL=https",
+        "NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}",
+        "NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}"
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/nextcloud",
