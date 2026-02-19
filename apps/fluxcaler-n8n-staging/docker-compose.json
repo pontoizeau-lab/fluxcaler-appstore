@@ -6,14 +6,15 @@
       "image": "n8nio/n8n:latest",
       "internalPort": 5678,
       "isMain": true,
-      "environment": {
-        "N8N_PORT": "5678",
-        "N8N_PROTOCOL": "http",
-        "WEBHOOK_URL": "http://localhost:5681/",
-        "N8N_DIAGNOSTICS_ENABLED": "false",
-        "GENERIC_TIMEZONE": "${TZ}",
-        "TZ": "${TZ}"
-      },
+      "environment": [
+        "N8N_PORT=5678",
+        "N8N_PROTOCOL=http",
+        "WEBHOOK_URL=http://localhost:5681/",
+        "N8N_DIAGNOSTICS_ENABLED=false",
+        "N8N_SECURE_COOKIE=false",
+        "GENERIC_TIMEZONE=${TZ}",
+        "TZ=${TZ}"
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/n8n_staging",
