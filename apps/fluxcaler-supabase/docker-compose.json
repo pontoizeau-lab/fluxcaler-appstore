@@ -7,15 +7,42 @@
       "internalPort": 5432,
       "isMain": false,
       "environment": [
-        "POSTGRES_HOST=/var/run/postgresql",
-        "PGPORT=5432",
-        "POSTGRES_PORT=5432",
-        "PGPASSWORD=${POSTGRES_PASSWORD}",
-        "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}",
-        "PGDATABASE=postgres",
-        "POSTGRES_DB=postgres",
-        "JWT_SECRET=${JWT_SECRET}",
-        "JWT_EXP=3600"
+        {
+          "key": "POSTGRES_HOST",
+          "value": "/var/run/postgresql"
+        },
+        {
+          "key": "PGPORT",
+          "value": "5432"
+        },
+        {
+          "key": "POSTGRES_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "PGPASSWORD",
+          "value": "${POSTGRES_PASSWORD}"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "${POSTGRES_PASSWORD}"
+        },
+        {
+          "key": "PGDATABASE",
+          "value": "postgres"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "postgres"
+        },
+        {
+          "key": "JWT_SECRET",
+          "value": "${JWT_SECRET}"
+        },
+        {
+          "key": "JWT_EXP",
+          "value": "3600"
+        }
       ],
       "volumes": [
         {
@@ -50,16 +77,46 @@
         "fluxcaler-supabase-meta"
       ],
       "environment": [
-        "KONG_DATABASE=off",
-        "KONG_DECLARATIVE_CONFIG=/var/lib/kong/kong.yml",
-        "KONG_DNS_ORDER=LAST,A,CNAME",
-        "KONG_PLUGINS=request-transformer,cors,key-auth,acl,basic-auth",
-        "KONG_NGINX_PROXY_PROXY_BUFFER_SIZE=160k",
-        "KONG_NGINX_PROXY_PROXY_BUFFERS=64 160k",
-        "SUPABASE_ANON_KEY=${ANON_KEY}",
-        "SUPABASE_SERVICE_KEY=${SERVICE_ROLE_KEY}",
-        "DASHBOARD_USERNAME=${DASHBOARD_USERNAME}",
-        "DASHBOARD_PASSWORD=${DASHBOARD_PASSWORD}"
+        {
+          "key": "KONG_DATABASE",
+          "value": "off"
+        },
+        {
+          "key": "KONG_DECLARATIVE_CONFIG",
+          "value": "/var/lib/kong/kong.yml"
+        },
+        {
+          "key": "KONG_DNS_ORDER",
+          "value": "LAST,A,CNAME"
+        },
+        {
+          "key": "KONG_PLUGINS",
+          "value": "request-transformer,cors,key-auth,acl,basic-auth"
+        },
+        {
+          "key": "KONG_NGINX_PROXY_PROXY_BUFFER_SIZE",
+          "value": "160k"
+        },
+        {
+          "key": "KONG_NGINX_PROXY_PROXY_BUFFERS",
+          "value": "64 160k"
+        },
+        {
+          "key": "SUPABASE_ANON_KEY",
+          "value": "${ANON_KEY}"
+        },
+        {
+          "key": "SUPABASE_SERVICE_KEY",
+          "value": "${SERVICE_ROLE_KEY}"
+        },
+        {
+          "key": "DASHBOARD_USERNAME",
+          "value": "${DASHBOARD_USERNAME}"
+        },
+        {
+          "key": "DASHBOARD_PASSWORD",
+          "value": "${DASHBOARD_PASSWORD}"
+        }
       ],
       "volumes": [
         {
@@ -90,30 +147,102 @@
         "fluxcaler-supabase-db"
       ],
       "environment": [
-        "GOTRUE_API_HOST=0.0.0.0",
-        "GOTRUE_API_PORT=9999",
-        "API_EXTERNAL_URL=${SITE_URL}",
-        "GOTRUE_DB_DRIVER=postgres",
-        "GOTRUE_DB_DATABASE_URL=postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres",
-        "GOTRUE_SITE_URL=${SITE_URL}",
-        "GOTRUE_URI_ALLOW_LIST=*",
-        "GOTRUE_DISABLE_SIGNUP=false",
-        "GOTRUE_JWT_ADMIN_ROLES=service_role",
-        "GOTRUE_JWT_AUD=authenticated",
-        "GOTRUE_JWT_DEFAULT_GROUP_NAME=authenticated",
-        "GOTRUE_JWT_EXP=3600",
-        "GOTRUE_JWT_SECRET=${JWT_SECRET}",
-        "GOTRUE_EXTERNAL_EMAIL_ENABLED=${ENABLE_EMAIL_SIGNUP}",
-        "GOTRUE_MAILER_AUTOCONFIRM=${ENABLE_EMAIL_AUTOCONFIRM}",
-        "GOTRUE_SMTP_HOST=${SMTP_HOST}",
-        "GOTRUE_SMTP_PORT=${SMTP_PORT}",
-        "GOTRUE_SMTP_USER=${SMTP_USER}",
-        "GOTRUE_SMTP_PASS=${SMTP_PASS}",
-        "GOTRUE_SMTP_ADMIN_EMAIL=${SMTP_SENDER_EMAIL}",
-        "GOTRUE_MAILER_URLPATHS_INVITE=/auth/v1/verify",
-        "GOTRUE_MAILER_URLPATHS_CONFIRMATION=/auth/v1/verify",
-        "GOTRUE_MAILER_URLPATHS_RECOVERY=/auth/v1/verify",
-        "GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE=/auth/v1/verify"
+        {
+          "key": "GOTRUE_API_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "GOTRUE_API_PORT",
+          "value": "9999"
+        },
+        {
+          "key": "API_EXTERNAL_URL",
+          "value": "${SITE_URL}"
+        },
+        {
+          "key": "GOTRUE_DB_DRIVER",
+          "value": "postgres"
+        },
+        {
+          "key": "GOTRUE_DB_DATABASE_URL",
+          "value": "postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres"
+        },
+        {
+          "key": "GOTRUE_SITE_URL",
+          "value": "${SITE_URL}"
+        },
+        {
+          "key": "GOTRUE_URI_ALLOW_LIST",
+          "value": "*"
+        },
+        {
+          "key": "GOTRUE_DISABLE_SIGNUP",
+          "value": "false"
+        },
+        {
+          "key": "GOTRUE_JWT_ADMIN_ROLES",
+          "value": "service_role"
+        },
+        {
+          "key": "GOTRUE_JWT_AUD",
+          "value": "authenticated"
+        },
+        {
+          "key": "GOTRUE_JWT_DEFAULT_GROUP_NAME",
+          "value": "authenticated"
+        },
+        {
+          "key": "GOTRUE_JWT_EXP",
+          "value": "3600"
+        },
+        {
+          "key": "GOTRUE_JWT_SECRET",
+          "value": "${JWT_SECRET}"
+        },
+        {
+          "key": "GOTRUE_EXTERNAL_EMAIL_ENABLED",
+          "value": "${ENABLE_EMAIL_SIGNUP}"
+        },
+        {
+          "key": "GOTRUE_MAILER_AUTOCONFIRM",
+          "value": "${ENABLE_EMAIL_AUTOCONFIRM}"
+        },
+        {
+          "key": "GOTRUE_SMTP_HOST",
+          "value": "${SMTP_HOST}"
+        },
+        {
+          "key": "GOTRUE_SMTP_PORT",
+          "value": "${SMTP_PORT}"
+        },
+        {
+          "key": "GOTRUE_SMTP_USER",
+          "value": "${SMTP_USER}"
+        },
+        {
+          "key": "GOTRUE_SMTP_PASS",
+          "value": "${SMTP_PASS}"
+        },
+        {
+          "key": "GOTRUE_SMTP_ADMIN_EMAIL",
+          "value": "${SMTP_SENDER_EMAIL}"
+        },
+        {
+          "key": "GOTRUE_MAILER_URLPATHS_INVITE",
+          "value": "/auth/v1/verify"
+        },
+        {
+          "key": "GOTRUE_MAILER_URLPATHS_CONFIRMATION",
+          "value": "/auth/v1/verify"
+        },
+        {
+          "key": "GOTRUE_MAILER_URLPATHS_RECOVERY",
+          "value": "/auth/v1/verify"
+        },
+        {
+          "key": "GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE",
+          "value": "/auth/v1/verify"
+        }
       ],
       "healthCheck": {
         "test": "wget --no-verbose --tries=1 --spider http://localhost:9999/health || exit 1",
@@ -131,13 +260,34 @@
         "fluxcaler-supabase-db"
       ],
       "environment": [
-        "PGRST_DB_URI=postgres://authenticator:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres",
-        "PGRST_DB_SCHEMAS=public,storage,graphql_public",
-        "PGRST_DB_ANON_ROLE=anon",
-        "PGRST_JWT_SECRET=${JWT_SECRET}",
-        "PGRST_DB_USE_LEGACY_GUCS=false",
-        "PGRST_APP_SETTINGS_JWT_SECRET=${JWT_SECRET}",
-        "PGRST_APP_SETTINGS_JWT_EXP=3600"
+        {
+          "key": "PGRST_DB_URI",
+          "value": "postgres://authenticator:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres"
+        },
+        {
+          "key": "PGRST_DB_SCHEMAS",
+          "value": "public,storage,graphql_public"
+        },
+        {
+          "key": "PGRST_DB_ANON_ROLE",
+          "value": "anon"
+        },
+        {
+          "key": "PGRST_JWT_SECRET",
+          "value": "${JWT_SECRET}"
+        },
+        {
+          "key": "PGRST_DB_USE_LEGACY_GUCS",
+          "value": "false"
+        },
+        {
+          "key": "PGRST_APP_SETTINGS_JWT_SECRET",
+          "value": "${JWT_SECRET}"
+        },
+        {
+          "key": "PGRST_APP_SETTINGS_JWT_EXP",
+          "value": "3600"
+        }
       ],
       "healthCheck": {
         "test": "wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1",
@@ -155,21 +305,66 @@
         "fluxcaler-supabase-db"
       ],
       "environment": [
-        "PORT=4000",
-        "DB_HOST=fluxcaler-supabase-db",
-        "DB_PORT=5432",
-        "DB_USER=supabase_admin",
-        "DB_PASSWORD=${POSTGRES_PASSWORD}",
-        "DB_NAME=postgres",
-        "DB_AFTER_CONNECT_QUERY=SET search_path TO _realtime",
-        "DB_ENC_KEY=supabaserealtime",
-        "API_JWT_SECRET=${JWT_SECRET}",
-        "FLY_ALLOC_ID=fly123",
-        "FLY_APP_NAME=realtime",
-        "SECRET_KEY_BASE=${JWT_SECRET}",
-        "ERL_AFLAGS=-proto_dist inet_tcp",
-        "ENABLE_TAILSCALE=false",
-        "DNS_NODES=''"
+        {
+          "key": "PORT",
+          "value": "4000"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "fluxcaler-supabase-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "DB_USER",
+          "value": "supabase_admin"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "${POSTGRES_PASSWORD}"
+        },
+        {
+          "key": "DB_NAME",
+          "value": "postgres"
+        },
+        {
+          "key": "DB_AFTER_CONNECT_QUERY",
+          "value": "SET search_path TO _realtime"
+        },
+        {
+          "key": "DB_ENC_KEY",
+          "value": "supabaserealtime"
+        },
+        {
+          "key": "API_JWT_SECRET",
+          "value": "${JWT_SECRET}"
+        },
+        {
+          "key": "FLY_ALLOC_ID",
+          "value": "fly123"
+        },
+        {
+          "key": "FLY_APP_NAME",
+          "value": "realtime"
+        },
+        {
+          "key": "SECRET_KEY_BASE",
+          "value": "${JWT_SECRET}"
+        },
+        {
+          "key": "ERL_AFLAGS",
+          "value": "-proto_dist inet_tcp"
+        },
+        {
+          "key": "ENABLE_TAILSCALE",
+          "value": "false"
+        },
+        {
+          "key": "DNS_NODES",
+          "value": "''"
+        }
       ],
       "healthCheck": {
         "test": "wget --no-verbose --tries=1 --spider http://localhost:4000/api/health || exit 1",
@@ -188,19 +383,58 @@
         "fluxcaler-supabase-imgproxy"
       ],
       "environment": [
-        "ANON_KEY=${ANON_KEY}",
-        "SERVICE_KEY=${SERVICE_ROLE_KEY}",
-        "POSTGREST_URL=http://fluxcaler-supabase-rest:3000",
-        "PGRST_JWT_SECRET=${JWT_SECRET}",
-        "DATABASE_URL=postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres",
-        "FILE_SIZE_LIMIT=52428800",
-        "STORAGE_BACKEND=file",
-        "FILE_STORAGE_BACKEND_PATH=/var/lib/storage",
-        "TENANT_ID=stub",
-        "REGION=stub",
-        "GLOBAL_S3_BUCKET=stub",
-        "ENABLE_IMAGE_TRANSFORMATION=true",
-        "IMGPROXY_URL=http://fluxcaler-supabase-imgproxy:5001"
+        {
+          "key": "ANON_KEY",
+          "value": "${ANON_KEY}"
+        },
+        {
+          "key": "SERVICE_KEY",
+          "value": "${SERVICE_ROLE_KEY}"
+        },
+        {
+          "key": "POSTGREST_URL",
+          "value": "http://fluxcaler-supabase-rest:3000"
+        },
+        {
+          "key": "PGRST_JWT_SECRET",
+          "value": "${JWT_SECRET}"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@fluxcaler-supabase-db:5432/postgres"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": "52428800"
+        },
+        {
+          "key": "STORAGE_BACKEND",
+          "value": "file"
+        },
+        {
+          "key": "FILE_STORAGE_BACKEND_PATH",
+          "value": "/var/lib/storage"
+        },
+        {
+          "key": "TENANT_ID",
+          "value": "stub"
+        },
+        {
+          "key": "REGION",
+          "value": "stub"
+        },
+        {
+          "key": "GLOBAL_S3_BUCKET",
+          "value": "stub"
+        },
+        {
+          "key": "ENABLE_IMAGE_TRANSFORMATION",
+          "value": "true"
+        },
+        {
+          "key": "IMGPROXY_URL",
+          "value": "http://fluxcaler-supabase-imgproxy:5001"
+        }
       ],
       "volumes": [
         {
@@ -221,10 +455,22 @@
       "internalPort": 5001,
       "isMain": false,
       "environment": [
-        "IMGPROXY_BIND=:5001",
-        "IMGPROXY_LOCAL_FILESYSTEM_ROOT=/",
-        "IMGPROXY_USE_ETAG=true",
-        "IMGPROXY_ENABLE_WEBP_DETECTION=true"
+        {
+          "key": "IMGPROXY_BIND",
+          "value": ":5001"
+        },
+        {
+          "key": "IMGPROXY_LOCAL_FILESYSTEM_ROOT",
+          "value": "/"
+        },
+        {
+          "key": "IMGPROXY_USE_ETAG",
+          "value": "true"
+        },
+        {
+          "key": "IMGPROXY_ENABLE_WEBP_DETECTION",
+          "value": "true"
+        }
       ],
       "volumes": [
         {
@@ -249,12 +495,30 @@
         "fluxcaler-supabase-db"
       ],
       "environment": [
-        "PG_META_PORT=8080",
-        "PG_META_DB_HOST=fluxcaler-supabase-db",
-        "PG_META_DB_PORT=5432",
-        "PG_META_DB_NAME=postgres",
-        "PG_META_DB_USER=supabase_admin",
-        "PG_META_DB_PASSWORD=${POSTGRES_PASSWORD}"
+        {
+          "key": "PG_META_PORT",
+          "value": "8080"
+        },
+        {
+          "key": "PG_META_DB_HOST",
+          "value": "fluxcaler-supabase-db"
+        },
+        {
+          "key": "PG_META_DB_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "PG_META_DB_NAME",
+          "value": "postgres"
+        },
+        {
+          "key": "PG_META_DB_USER",
+          "value": "supabase_admin"
+        },
+        {
+          "key": "PG_META_DB_PASSWORD",
+          "value": "${POSTGRES_PASSWORD}"
+        }
       ],
       "healthCheck": {
         "test": "wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1",
@@ -272,18 +536,54 @@
         "fluxcaler-supabase-kong"
       ],
       "environment": [
-        "STUDIO_PG_META_URL=http://fluxcaler-supabase-meta:8080",
-        "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}",
-        "DEFAULT_ORGANIZATION_NAME=Fluxcaler",
-        "DEFAULT_PROJECT_NAME=Default Project",
-        "SUPABASE_URL=http://fluxcaler-supabase-kong:8000",
-        "SUPABASE_PUBLIC_URL=${SITE_URL}",
-        "SUPABASE_ANON_KEY=${ANON_KEY}",
-        "SUPABASE_SERVICE_KEY=${SERVICE_ROLE_KEY}",
-        "LOGFLARE_API_KEY=",
-        "LOGFLARE_URL=",
-        "NEXT_PUBLIC_ENABLE_LOGS=false",
-        "NEXT_ANALYTICS_BACKEND_PROVIDER=postgres"
+        {
+          "key": "STUDIO_PG_META_URL",
+          "value": "http://fluxcaler-supabase-meta:8080"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "${POSTGRES_PASSWORD}"
+        },
+        {
+          "key": "DEFAULT_ORGANIZATION_NAME",
+          "value": "Fluxcaler"
+        },
+        {
+          "key": "DEFAULT_PROJECT_NAME",
+          "value": "Default Project"
+        },
+        {
+          "key": "SUPABASE_URL",
+          "value": "http://fluxcaler-supabase-kong:8000"
+        },
+        {
+          "key": "SUPABASE_PUBLIC_URL",
+          "value": "${SITE_URL}"
+        },
+        {
+          "key": "SUPABASE_ANON_KEY",
+          "value": "${ANON_KEY}"
+        },
+        {
+          "key": "SUPABASE_SERVICE_KEY",
+          "value": "${SERVICE_ROLE_KEY}"
+        },
+        {
+          "key": "LOGFLARE_API_KEY",
+          "value": ""
+        },
+        {
+          "key": "LOGFLARE_URL",
+          "value": ""
+        },
+        {
+          "key": "NEXT_PUBLIC_ENABLE_LOGS",
+          "value": "false"
+        },
+        {
+          "key": "NEXT_ANALYTICS_BACKEND_PROVIDER",
+          "value": "postgres"
+        }
       ],
       "addPorts": [
         {

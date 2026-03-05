@@ -7,10 +7,22 @@
       "internalPort": 6333,
       "isMain": true,
       "environment": [
-        "QDRANT__SERVICE__API_KEY=${QDRANT_API_KEY}",
-        "QDRANT__SERVICE__GRPC_PORT=6334",
-        "QDRANT__SERVICE__ENABLE_TLS=false",
-        "QDRANT__LOG_LEVEL=INFO"
+        {
+          "key": "QDRANT__SERVICE__API_KEY",
+          "value": "${QDRANT_API_KEY}"
+        },
+        {
+          "key": "QDRANT__SERVICE__GRPC_PORT",
+          "value": "6334"
+        },
+        {
+          "key": "QDRANT__SERVICE__ENABLE_TLS",
+          "value": "false"
+        },
+        {
+          "key": "QDRANT__LOG_LEVEL",
+          "value": "INFO"
+        }
       ],
       "volumes": [
         {
