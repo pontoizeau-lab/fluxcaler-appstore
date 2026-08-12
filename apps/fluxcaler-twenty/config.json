@@ -1,0 +1,45 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler Twenty",
+  "id": "fluxcaler-twenty",
+  "available": true,
+  "short_desc": "Modern open-source CRM — alternative to Salesforce/HubSpot",
+  "author": "Twenty",
+  "port": 8086,
+  "categories": ["utilities", "data"],
+  "description": "Twenty is a modern open-source CRM: contacts, companies, deals and pipelines with a Notion-like UX. Replaces Salesforce, HubSpot CRM and Pipedrive. Includes dedicated PostgreSQL and Redis.",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "latest",
+  "source": "https://github.com/twentyhq/twenty",
+  "website": "https://twenty.com",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Public Server URL",
+      "env_variable": "TWENTY_SERVER_URL",
+      "default": "http://localhost:8086",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Application Secret",
+      "env_variable": "TWENTY_APP_SECRET",
+      "min": 32,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "PostgreSQL Password",
+      "env_variable": "TWENTY_DB_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

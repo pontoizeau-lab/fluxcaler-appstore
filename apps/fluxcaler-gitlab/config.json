@@ -1,0 +1,37 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler GitLab",
+  "id": "fluxcaler-gitlab",
+  "available": true,
+  "short_desc": "Self-hosted Git forge + CI/CD — alternative to GitHub",
+  "author": "GitLab",
+  "port": 8929,
+  "categories": ["development", "utilities"],
+  "description": "GitLab Community Edition: private Git repositories, merge requests, CI/CD pipelines, container registry and wiki, fully self-hosted. Replaces GitHub, Bitbucket and Jenkins. On Fluxcaler VPS it is also the Git home of your AI employees: their skills, agents and project repositories.",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "latest",
+  "source": "https://gitlab.com/gitlab-org/gitlab-foss",
+  "website": "https://about.gitlab.com",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "External URL (public)",
+      "env_variable": "GITLAB_EXTERNAL_URL",
+      "default": "http://localhost:8929",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Initial root password",
+      "env_variable": "GITLAB_ROOT_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

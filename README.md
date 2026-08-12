@@ -12,6 +12,11 @@ Stack d'applications IA souveraine et auto-hébergeable pour [Runtipi](https://r
 | **fluxcaler-mongodb** | 27018, 8082 | MongoDB + Mongo Express |
 | **fluxcaler-supabase** | 3002, 5433, 8010, 8444 | Supabase complet |
 | **fluxcaler-nextcloud** | 8890 | Nextcloud fichiers |
+| **fluxcaler-metabase** | 8084 | Metabase BI / dashboards (remplace Tableau, Power BI) |
+| **fluxcaler-nocobase** | 8085 | NocoBase no-code apps (remplace Airtable, PowerApps) |
+| **fluxcaler-twenty** | 8086 | Twenty CRM (remplace Salesforce, HubSpot, Pipedrive) |
+| **fluxcaler-plane** | 8087 | Plane gestion de projet (remplace Jira, Linear, Asana) |
+| **fluxcaler-gitlab** | 8929, 2222 (SSH) | GitLab CE forge Git + CI/CD (remplace GitHub) — hub des employés IA |
 
 ## Architecture
 
@@ -147,6 +152,26 @@ Instance Nextcloud pour la gestion de fichiers clients Fluxcaler. Partage de doc
 - Collaboration sur des documents en temps réel
 - Sauvegarde et archivage de données
 
+### fluxcaler-metabase - Business Intelligence
+
+Plateforme BI open source : connectez vos bases (Supabase locale, MongoDB…), explorez sans SQL, construisez des dashboards. **Remplace** : Tableau, Power BI, Looker.
+
+### fluxcaler-nocobase - No-code Business Apps
+
+Plateforme no-code/low-code pour construire CRM, outils internes et applications métier sur vos propres données. **Remplace** : Airtable, Microsoft PowerApps, Retool.
+
+### fluxcaler-twenty - CRM moderne
+
+CRM open source (UX type Notion) : contacts, entreprises, pipelines, objets personnalisés, API GraphQL/REST + webhooks pour n8n. **Remplace** : Salesforce, HubSpot CRM, Pipedrive.
+
+### fluxcaler-plane - Gestion de projet
+
+Issues, cycles (sprints), modules, roadmaps et docs. Stack complète (web, space, admin, api, workers, PostgreSQL, Redis, RabbitMQ, MinIO) derrière un proxy intégré. **Remplace** : Jira, Linear, Asana, Monday.com.
+
+### fluxcaler-gitlab - Forge Git + CI/CD
+
+GitLab CE auto-hébergé : dépôts privés, merge requests, CI/CD, registre de conteneurs. C'est aussi le **hub Git des employés IA** Fluxcaler : stockage versionné de leurs skills, dépôts de travail des agents (Max, Claude Code), revues de leurs merge requests. **Remplace** : GitHub, Bitbucket, Jenkins.
+
 ## Installation rapide
 
 ### Prérequis
@@ -248,6 +273,12 @@ Pour une stack complète, installez dans cet ordre :
 | Supabase Studio | 3001 | 3002 |
 | Supabase Postgres | 5432 | 5433 |
 | Nextcloud | 80 | 8890 |
+| Metabase | 3000 | 8084 |
+| NocoBase | 80 | 8085 |
+| Twenty | 3000 | 8086 |
+| Plane (proxy) | 80 | 8087 |
+| GitLab HTTP | 80 | 8929 |
+| GitLab SSH | 22 | 2222 |
 
 ## Support
 

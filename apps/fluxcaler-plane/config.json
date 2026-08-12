@@ -1,0 +1,61 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler Plane",
+  "id": "fluxcaler-plane",
+  "available": true,
+  "short_desc": "Project management — alternative to Jira/Linear/Asana",
+  "author": "Plane",
+  "port": 8087,
+  "categories": ["utilities"],
+  "description": "Plane is an open-source project management platform: issues, cycles (sprints), modules, roadmaps and docs. Replaces Jira, Linear, Asana and Monday.com. Full stack: web, api, workers, PostgreSQL, Redis, RabbitMQ, MinIO behind a bundled proxy.",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "stable",
+  "source": "https://github.com/makeplane/plane",
+  "website": "https://plane.so",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Public Web URL",
+      "env_variable": "PLANE_WEB_URL",
+      "default": "http://localhost:8087",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Django Secret Key",
+      "env_variable": "PLANE_SECRET_KEY",
+      "min": 32,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "PostgreSQL Password",
+      "env_variable": "PLANE_DB_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "RabbitMQ Password",
+      "env_variable": "PLANE_RABBITMQ_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "MinIO Root Password",
+      "env_variable": "PLANE_MINIO_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

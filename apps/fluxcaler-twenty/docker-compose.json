@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fluxcaler-twenty",
+      "image": "twentycrm/twenty:latest",
+      "internalPort": 3000,
+      "isMain": true,
+      "dependsOn": ["fluxcaler-twenty-db", "fluxcaler-twenty-redis"],
+      "environment": [
+        { "key": "NODE_PORT", "value": "3000" },
+        { "key": "SERVER_URL", "value": "${TWENTY_SERVER_URL}" },
+        { "key": "APP_SECRET", "value": "${TWENTY_APP_SECRET}" },
+        { "key": "PG_DATABASE_URL", "value": "postgres://postgres:${TWENTY_DB_PASSWORD}@fluxcaler-twenty-db:5432/default" },
+        { "key": "REDIS_URL", "value": "redis://fluxcaler-twenty-redis:6379" },
+        { "key": "STORAGE_TYPE", "value": "local" },
+        { "key": "DISABLE_DB_MIGRATIONS", "value": "false" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server-local-data",
+          "containerPath": "/app/packages/twenty-server/.local-storage"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:3000/healthz || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 10
+      },
+      "addPorts": [
+        { "containerPort": 3000, "hostPort": 8086, "protocol": "tcp" }
+      ]
+    },
+    {
+      "name": "fluxcaler-twenty-worker",
+      "image": "twentycrm/twenty:latest",
+      "internalPort": 3000,
+      "isMain": false,
+      "command": ["yarn", "worker:prod"],
+      "dependsOn": ["fluxcaler-twenty-db", "fluxcaler-twenty-redis"],
+      "environment": [
+        { "key": "SERVER_URL", "value": "${TWENTY_SERVER_URL}" },
+        { "key": "APP_SECRET", "value": "${TWENTY_APP_SECRET}" },
+        { "key": "PG_DATABASE_URL", "value": "postgres://postgres:${TWENTY_DB_PASSWORD}@fluxcaler-twenty-db:5432/default" },
+        { "key": "REDIS_URL", "value": "redis://fluxcaler-twenty-redis:6379" },
+        { "key": "STORAGE_TYPE", "value": "local" },
+        { "key": "DISABLE_DB_MIGRATIONS", "value": "true" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server-local-data",
+          "containerPath": "/app/packages/twenty-server/.local-storage"
+        }
+      ]
+    },
+    {
+      "name": "fluxcaler-twenty-db",
+      "image": "postgres:16-alpine",
+      "internalPort": 5432,
+      "isMain": false,
+      "environment": [
+        { "key": "POSTGRES_USER", "value": "postgres" },
+        { "key": "POSTGRES_PASSWORD", "value": "${TWENTY_DB_PASSWORD}" },
+        { "key": "POSTGRES_DB", "value": "default" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U postgres -d default",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    },
+    {
+      "name": "fluxcaler-twenty-redis",
+      "image": "redis:7-alpine",
+      "internalPort": 6379,
+      "isMain": false,
+      "command": ["redis-server", "--maxmemory-policy", "noeviction"],
+      "healthCheck": {
+        "test": "redis-cli ping | grep PONG",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    }
+  ]
+}

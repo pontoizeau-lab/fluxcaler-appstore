@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fluxcaler-nocobase",
+      "image": "nocobase/nocobase:latest",
+      "internalPort": 80,
+      "isMain": true,
+      "dependsOn": ["fluxcaler-nocobase-db"],
+      "environment": [
+        { "key": "APP_ENV", "value": "production" },
+        { "key": "APP_KEY", "value": "${NOCOBASE_APP_KEY}" },
+        { "key": "DB_DIALECT", "value": "postgres" },
+        { "key": "DB_HOST", "value": "fluxcaler-nocobase-db" },
+        { "key": "DB_PORT", "value": "5432" },
+        { "key": "DB_DATABASE", "value": "nocobase" },
+        { "key": "DB_USER", "value": "nocobase" },
+        { "key": "DB_PASSWORD", "value": "${NOCOBASE_DB_PASSWORD}" },
+        { "key": "INIT_ROOT_EMAIL", "value": "${NOCOBASE_ADMIN_EMAIL}" },
+        { "key": "INIT_ROOT_PASSWORD", "value": "${NOCOBASE_ADMIN_PASSWORD}" },
+        { "key": "INIT_ROOT_USERNAME", "value": "admin" },
+        { "key": "INIT_ROOT_NICKNAME", "value": "Admin" },
+        { "key": "TZ", "value": "${TZ}" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/storage",
+          "containerPath": "/app/nocobase/storage"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:80/api/__health || curl -f http://localhost:80/ || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 5
+      },
+      "addPorts": [
+        { "containerPort": 80, "hostPort": 8085, "protocol": "tcp" }
+      ]
+    },
+    {
+      "name": "fluxcaler-nocobase-db",
+      "image": "postgres:16-alpine",
+      "internalPort": 5432,
+      "isMain": false,
+      "environment": [
+        { "key": "POSTGRES_DB", "value": "nocobase" },
+        { "key": "POSTGRES_USER", "value": "nocobase" },
+        { "key": "POSTGRES_PASSWORD", "value": "${NOCOBASE_DB_PASSWORD}" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U nocobase -d nocobase",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    }
+  ]
+}

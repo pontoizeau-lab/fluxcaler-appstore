@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fluxcaler-metabase",
+      "image": "metabase/metabase:latest",
+      "internalPort": 3000,
+      "isMain": true,
+      "dependsOn": ["fluxcaler-metabase-db"],
+      "environment": [
+        { "key": "MB_DB_TYPE", "value": "postgres" },
+        { "key": "MB_DB_DBNAME", "value": "metabase" },
+        { "key": "MB_DB_PORT", "value": "5432" },
+        { "key": "MB_DB_USER", "value": "metabase" },
+        { "key": "MB_DB_PASS", "value": "${METABASE_DB_PASSWORD}" },
+        { "key": "MB_DB_HOST", "value": "fluxcaler-metabase-db" },
+        { "key": "MB_SITE_URL", "value": "${METABASE_SITE_URL}" },
+        { "key": "JAVA_TIMEZONE", "value": "${TZ}" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/metabase",
+          "containerPath": "/metabase-data"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:3000/api/health || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 10
+      },
+      "addPorts": [
+        { "containerPort": 3000, "hostPort": 8084, "protocol": "tcp" }
+      ]
+    },
+    {
+      "name": "fluxcaler-metabase-db",
+      "image": "postgres:16-alpine",
+      "internalPort": 5432,
+      "isMain": false,
+      "environment": [
+        { "key": "POSTGRES_DB", "value": "metabase" },
+        { "key": "POSTGRES_USER", "value": "metabase" },
+        { "key": "POSTGRES_PASSWORD", "value": "${METABASE_DB_PASSWORD}" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U metabase -d metabase",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    }
+  ]
+}

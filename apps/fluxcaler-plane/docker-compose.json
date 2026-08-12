@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fluxcaler-plane-proxy",
+      "image": "makeplane/plane-proxy:stable",
+      "internalPort": 80,
+      "isMain": true,
+      "dependsOn": ["fluxcaler-plane-web", "fluxcaler-plane-api"],
+      "environment": [
+        { "key": "NGINX_PORT", "value": "80" },
+        { "key": "BUCKET_NAME", "value": "uploads" },
+        { "key": "FILE_SIZE_LIMIT", "value": "5242880" }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:80/ || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 10
+      },
+      "addPorts": [
+        { "containerPort": 80, "hostPort": 8087, "protocol": "tcp" }
+      ]
+    },
+    {
+      "name": "fluxcaler-plane-web",
+      "image": "makeplane/plane-frontend:stable",
+      "internalPort": 3000,
+      "isMain": false,
+      "command": ["node", "web/server.js", "web"],
+      "dependsOn": ["fluxcaler-plane-api"]
+    },
+    {
+      "name": "fluxcaler-plane-space",
+      "image": "makeplane/plane-space:stable",
+      "internalPort": 3000,
+      "isMain": false,
+      "command": ["node", "space/server.js", "space"],
+      "dependsOn": ["fluxcaler-plane-api"]
+    },
+    {
+      "name": "fluxcaler-plane-admin",
+      "image": "makeplane/plane-admin:stable",
+      "internalPort": 3000,
+      "isMain": false,
+      "command": ["node", "admin/server.js", "admin"],
+      "dependsOn": ["fluxcaler-plane-api"]
+    },
+    {
+      "name": "fluxcaler-plane-api",
+      "image": "makeplane/plane-backend:stable",
+      "internalPort": 8000,
+      "isMain": false,
+      "command": ["./bin/docker-entrypoint-api.sh"],
+      "dependsOn": ["fluxcaler-plane-db", "fluxcaler-plane-redis", "fluxcaler-plane-mq", "fluxcaler-plane-migrator"],
+      "environment": [
+        { "key": "SECRET_KEY", "value": "${PLANE_SECRET_KEY}" },
+        { "key": "DEBUG", "value": "0" },
+        { "key": "DATABASE_URL", "value": "postgresql://plane:${PLANE_DB_PASSWORD}@fluxcaler-plane-db/plane" },
+        { "key": "REDIS_URL", "value": "redis://fluxcaler-plane-redis:6379/" },
+        { "key": "AMQP_URL", "value": "amqp://plane:${PLANE_RABBITMQ_PASSWORD}@fluxcaler-plane-mq:5672/plane" },
+        { "key": "USE_MINIO", "value": "1" },
+        { "key": "AWS_REGION", "value": "" },
+        { "key": "AWS_ACCESS_KEY_ID", "value": "plane" },
+        { "key": "AWS_SECRET_ACCESS_KEY", "value": "${PLANE_MINIO_PASSWORD}" },
+        { "key": "AWS_S3_ENDPOINT_URL", "value": "http://fluxcaler-plane-minio:9000" },
+        { "key": "AWS_S3_BUCKET_NAME", "value": "uploads" },
+        { "key": "WEB_URL", "value": "${PLANE_WEB_URL}" },
+        { "key": "CORS_ALLOWED_ORIGINS", "value": "${PLANE_WEB_URL}" },
+        { "key": "GUNICORN_WORKERS", "value": "1" }
+      ]
+    },
+    {
+      "name": "fluxcaler-plane-worker",
+      "image": "makeplane/plane-backend:stable",
+      "internalPort": 8000,
+      "isMain": false,
+      "command": ["./bin/docker-entrypoint-worker.sh"],
+      "dependsOn": ["fluxcaler-plane-api"],
+      "environment": [
+        { "key": "SECRET_KEY", "value": "${PLANE_SECRET_KEY}" },
+        { "key": "DEBUG", "value": "0" },
+        { "key": "DATABASE_URL", "value": "postgresql://plane:${PLANE_DB_PASSWORD}@fluxcaler-plane-db/plane" },
+        { "key": "REDIS_URL", "value": "redis://fluxcaler-plane-redis:6379/" },
+        { "key": "AMQP_URL", "value": "amqp://plane:${PLANE_RABBITMQ_PASSWORD}@fluxcaler-plane-mq:5672/plane" },
+        { "key": "USE_MINIO", "value": "1" },
+        { "key": "AWS_ACCESS_KEY_ID", "value": "plane" },
+        { "key": "AWS_SECRET_ACCESS_KEY", "value": "${PLANE_MINIO_PASSWORD}" },
+        { "key": "AWS_S3_ENDPOINT_URL", "value": "http://fluxcaler-plane-minio:9000" },
+        { "key": "AWS_S3_BUCKET_NAME", "value": "uploads" },
+        { "key": "WEB_URL", "value": "${PLANE_WEB_URL}" }
+      ]
+    },
+    {
+      "name": "fluxcaler-plane-beat",
+      "image": "makeplane/plane-backend:stable",
+      "internalPort": 8000,
+      "isMain": false,
+      "command": ["./bin/docker-entrypoint-beat.sh"],
+      "dependsOn": ["fluxcaler-plane-api"],
+      "environment": [
+        { "key": "SECRET_KEY", "value": "${PLANE_SECRET_KEY}" },
+        { "key": "DEBUG", "value": "0" },
+        { "key": "DATABASE_URL", "value": "postgresql://plane:${PLANE_DB_PASSWORD}@fluxcaler-plane-db/plane" },
+        { "key": "REDIS_URL", "value": "redis://fluxcaler-plane-redis:6379/" },
+        { "key": "AMQP_URL", "value": "amqp://plane:${PLANE_RABBITMQ_PASSWORD}@fluxcaler-plane-mq:5672/plane" }
+      ]
+    },
+    {
+      "name": "fluxcaler-plane-migrator",
+      "image": "makeplane/plane-backend:stable",
+      "internalPort": 8000,
+      "isMain": false,
+      "restart": "on-failure",
+      "command": ["./bin/docker-entrypoint-migrator.sh"],
+      "dependsOn": ["fluxcaler-plane-db", "fluxcaler-plane-redis"],
+      "environment": [
+        { "key": "SECRET_KEY", "value": "${PLANE_SECRET_KEY}" },
+        { "key": "DEBUG", "value": "0" },
+        { "key": "DATABASE_URL", "value": "postgresql://plane:${PLANE_DB_PASSWORD}@fluxcaler-plane-db/plane" },
+        { "key": "REDIS_URL", "value": "redis://fluxcaler-plane-redis:6379/" }
+      ]
+    },
+    {
+      "name": "fluxcaler-plane-db",
+      "image": "postgres:15-alpine",
+      "internalPort": 5432,
+      "isMain": false,
+      "environment": [
+        { "key": "POSTGRES_USER", "value": "plane" },
+        { "key": "POSTGRES_PASSWORD", "value": "${PLANE_DB_PASSWORD}" },
+        { "key": "POSTGRES_DB", "value": "plane" },
+        { "key": "PGDATA", "value": "/var/lib/postgresql/data" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U plane -d plane",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    },
+    {
+      "name": "fluxcaler-plane-redis",
+      "image": "valkey/valkey:7.2-alpine",
+      "internalPort": 6379,
+      "isMain": false,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "fluxcaler-plane-mq",
+      "image": "rabbitmq:3.13-management-alpine",
+      "internalPort": 5672,
+      "isMain": false,
+      "environment": [
+        { "key": "RABBITMQ_DEFAULT_USER", "value": "plane" },
+        { "key": "RABBITMQ_DEFAULT_PASS", "value": "${PLANE_RABBITMQ_PASSWORD}" },
+        { "key": "RABBITMQ_DEFAULT_VHOST", "value": "plane" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/rabbitmq",
+          "containerPath": "/var/lib/rabbitmq"
+        }
+      ]
+    },
+    {
+      "name": "fluxcaler-plane-minio",
+      "image": "minio/minio:latest",
+      "internalPort": 9000,
+      "isMain": false,
+      "command": ["server", "/export", "--console-address", ":9090"],
+      "environment": [
+        { "key": "MINIO_ROOT_USER", "value": "plane" },
+        { "key": "MINIO_ROOT_PASSWORD", "value": "${PLANE_MINIO_PASSWORD}" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/minio",
+          "containerPath": "/export"
+        }
+      ]
+    }
+  ]
+}

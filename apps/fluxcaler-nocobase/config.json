@@ -1,0 +1,53 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler NocoBase",
+  "id": "fluxcaler-nocobase",
+  "available": true,
+  "short_desc": "No-code platform to build internal tools and business apps",
+  "author": "NocoBase",
+  "port": 8085,
+  "categories": ["utilities", "data"],
+  "description": "NocoBase is an open-source no-code/low-code platform to build CRMs, internal tools and business applications on your own data. Replaces Airtable, Microsoft PowerApps and Retool. Includes a dedicated PostgreSQL database.",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "latest",
+  "source": "https://github.com/nocobase/nocobase",
+  "website": "https://www.nocobase.com",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Admin Email",
+      "env_variable": "NOCOBASE_ADMIN_EMAIL",
+      "default": "admin@fluxcaler.net",
+      "required": true
+    },
+    {
+      "type": "password",
+      "label": "Admin Password",
+      "env_variable": "NOCOBASE_ADMIN_PASSWORD",
+      "min": 12,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "Application Key (session signing)",
+      "env_variable": "NOCOBASE_APP_KEY",
+      "min": 32,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "PostgreSQL Password",
+      "env_variable": "NOCOBASE_DB_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}

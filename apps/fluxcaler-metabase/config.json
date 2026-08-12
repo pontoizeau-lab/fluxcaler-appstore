@@ -1,0 +1,37 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler Metabase",
+  "id": "fluxcaler-metabase",
+  "available": true,
+  "short_desc": "Business Intelligence — dashboards and analytics on your data",
+  "author": "Metabase",
+  "port": 8084,
+  "categories": ["data", "utilities"],
+  "description": "Metabase is an open-source Business Intelligence platform: connect your databases, explore data without SQL, build dashboards and share insights. Replaces Tableau, Power BI and Looker. Includes a dedicated PostgreSQL application database.",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "latest",
+  "source": "https://github.com/metabase/metabase",
+  "website": "https://www.metabase.com",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Public Site URL",
+      "env_variable": "METABASE_SITE_URL",
+      "default": "http://localhost:8084",
+      "required": false
+    },
+    {
+      "type": "password",
+      "label": "PostgreSQL Password (Metabase app DB)",
+      "env_variable": "METABASE_DB_PASSWORD",
+      "min": 16,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}
