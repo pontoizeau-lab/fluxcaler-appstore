@@ -4,7 +4,7 @@ Max, l'assistant de code IA, **hébergé sur votre propre serveur** : il lit et
 écrit votre code, exécute vos tâches et pilote vos projets, sans rien installer
 sur votre poste. Vos données de travail restent chez vous (souveraineté ZDR).
 
-- Accès : `https://max-ops-<votre-instance>.fluxcaler.net` (identifiant `opencode`)
+- Accès : `https://max-ops-<votre-instance>.fluxcaler.net` (identifiant `max`)
 - Inférence : vos crédits Fluxcaler via l'AI-Proxy (la clé est injectée à
   l'installation, jamais embarquée dans l'image)
 - Canal : **stable uniquement** (`registry.fluxcaler.net/fluxcaler/max:X.Y.Z`)

@@ -24,7 +24,7 @@
     },
     {
       "type": "password",
-      "label": "Mot de passe d'accès (utilisateur : opencode)",
+      "label": "Mot de passe d'accès (utilisateur : max)",
       "env_variable": "OPENCODE_SERVER_PASSWORD",
       "min": 12,
       "required": true,
