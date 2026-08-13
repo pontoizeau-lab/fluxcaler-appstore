@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fluxcaler-max",
-      "image": "registry.fluxcaler.net/fluxcaler/max:1.0.0",
+      "image": "registry.fluxcaler.net/fluxcaler/max:1.0.3",
       "internalPort": 4096,
       "isMain": true,
       "environment": [

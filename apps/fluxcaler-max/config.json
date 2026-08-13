@@ -2,16 +2,19 @@
   "$schema": "../app-info-schema.json",
   "name": "Fluxcaler Max",
   "id": "fluxcaler-max",
-  "available": false,
+  "available": true,
   "short_desc": "Max dans votre navigateur : votre environnement de code IA, hébergé sur votre serveur",
   "author": "Fluxcaler",
   "port": 4310,
-  "categories": ["ai", "development"],
+  "categories": [
+    "ai",
+    "development"
+  ],
   "description": "Max VPS : l'assistant de code Max directement dans votre navigateur, hébergé sur VOTRE serveur (vos données restent chez vous). Connecté à vos crédits Fluxcaler via l'AI-Proxy. IMPORTANT : l'installation initiale est réalisée par l'équipe Fluxcaler (elle configure l'accès max-ops.<votre-domaine>, les identifiants et la clé API) — cette tuile sert ensuite aux mises à jour.",
   "min_tipi_version": "4.0.0",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "dynamic_config": true,
-  "version": "1.0.0",
+  "version": "1.0.3",
   "source": "https://github.com/pontoizeau-lab/max-desktop",
   "exposable": true,
   "url_suffix": "/",
@@ -31,5 +34,7 @@
       "generate": true
     }
   ],
-  "supported_architectures": ["amd64"]
+  "supported_architectures": [
+    "amd64"
+  ]
 }
