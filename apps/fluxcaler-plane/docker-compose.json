@@ -176,7 +176,8 @@
     },
     {
       "name": "fluxcaler-plane-minio",
-      "image": "minio/minio:latest",
+      "image": "cgr.dev/chainguard/minio:latest",
+      "user": "1000:1000",
       "internalPort": 9000,
       "isMain": false,
       "command": ["server", "/export", "--console-address", ":9090"],
