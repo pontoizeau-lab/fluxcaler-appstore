@@ -8,7 +8,7 @@
       "isMain": true,
       "environment": [
         { "key": "GITLAB_ROOT_PASSWORD", "value": "${GITLAB_ROOT_PASSWORD}" },
-        { "key": "GITLAB_OMNIBUS_CONFIG", "value": "external_url '${GITLAB_EXTERNAL_URL}'; nginx['listen_port'] = 80; nginx['listen_https'] = false; letsencrypt['enable'] = false; gitlab_rails['gitlab_shell_ssh_port'] = 2222; gitlab_rails['initial_root_password'] = '${GITLAB_ROOT_PASSWORD}'; prometheus_monitoring['enable'] = false; sidekiq['concurrency'] = 5; puma['worker_processes'] = 2;" }
+        { "key": "GITLAB_OMNIBUS_CONFIG", "value": "external_url '${GITLAB_EXTERNAL_URL}'; nginx['listen_port'] = 80; nginx['listen_https'] = false; letsencrypt['enable'] = false; gitlab_rails['gitlab_shell_ssh_port'] = 2222; gitlab_rails['initial_root_password'] = '${GITLAB_ROOT_PASSWORD}'; prometheus_monitoring['enable'] = false; puma['worker_processes'] = 0; sidekiq['concurrency'] = 5; gitlab_kas['enable'] = false; gitlab_rails['gitlab_kas_enabled'] = false; gitlab_rails['usage_ping_enabled'] = false; gitlab_rails['env'] = { 'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000' }; gitaly['env'] = { 'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000', 'GITALY_COMMAND_SPAWN_MAX_PARALLEL' => '2' }; postgresql['shared_buffers'] = '256MB';" }
       ],
       "volumes": [
         {
