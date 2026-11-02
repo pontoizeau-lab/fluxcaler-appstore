@@ -48,6 +48,10 @@
         {
           "hostPath": "${APP_DATA_DIR}/data/postgres",
           "containerPath": "/var/lib/postgresql/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/pgsodium/pgsodium_root.key",
+          "containerPath": "/etc/postgresql-custom/pgsodium_root.key"
         }
       ],
       "healthCheck": {
