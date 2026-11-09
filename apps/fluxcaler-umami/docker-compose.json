@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fluxcaler-umami",
+      "image": "ghcr.io/umami-software/umami:3.4.1@sha256:e69d1a7932e9dab0fc523edc7be1f3a53f3c261f57856fc2167ae74a8fc022e8",
+      "internalPort": 3000,
+      "isMain": true,
+      "environment": [
+        { "key": "DATABASE_URL", "value": "postgresql://umami:${UMAMI_DB_PASSWORD}@fluxcaler-supabase-db:5432/umami" },
+        { "key": "APP_SECRET", "value": "${UMAMI_APP_SECRET}" },
+        { "key": "CLIENT_IP_HEADER", "value": "cf-connecting-ip" },
+        { "key": "TRACKER_SCRIPT_NAME", "value": "m.js" },
+        { "key": "COLLECT_API_ENDPOINT", "value": "/api/m" },
+        { "key": "DISABLE_TELEMETRY", "value": "1" },
+        { "key": "DISABLE_UPDATES", "value": "1" },
+        { "key": "TZ", "value": "${TZ}" }
+      ],
+      "healthCheck": {
+        "test": "curl -fsS http://127.0.0.1:3000/api/heartbeat || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 10
+      },
+      "addPorts": [
+        { "containerPort": 3000, "hostPort": 8088, "protocol": "tcp" }
+      ]
+    }
+  ]
+}

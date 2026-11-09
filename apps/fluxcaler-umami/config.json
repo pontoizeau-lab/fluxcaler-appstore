@@ -1,0 +1,38 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Fluxcaler Analytics (Umami)",
+  "id": "fluxcaler-umami",
+  "available": true,
+  "short_desc": "Cookieless web analytics — visits, pages, sources and events of your websites",
+  "author": "Umami Software",
+  "port": 8088,
+  "categories": ["data", "utilities"],
+  "description": "Umami is an open-source, privacy-focused web analytics tool (no cookies, no IP stored). Fluxcaler installs it on your server: your visitors' data never leaves it. Database: dedicated 'umami' database in the local Supabase PostgreSQL (fluxcaler-supabase-db), created by the Fluxcaler socle (step A11) before installation. Only the tracker script and the collect endpoint are published (neutral names m.js and /api/m); the Umami interface is not public.",
+  "min_tipi_version": "4.0.0",
+  "tipi_version": 1,
+  "dynamic_config": true,
+  "version": "3.4.1",
+  "source": "https://github.com/umami-software/umami",
+  "website": "https://umami.is",
+  "exposable": true,
+  "url_suffix": "/",
+  "form_fields": [
+    {
+      "type": "password",
+      "label": "Umami database password (role umami in fluxcaler-supabase-db, must match the role)",
+      "env_variable": "UMAMI_DB_PASSWORD",
+      "min": 32,
+      "required": true,
+      "generate": true
+    },
+    {
+      "type": "password",
+      "label": "Umami APP_SECRET (session signing)",
+      "env_variable": "UMAMI_APP_SECRET",
+      "min": 48,
+      "required": true,
+      "generate": true
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"]
+}
