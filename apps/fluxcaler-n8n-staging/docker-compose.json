@@ -3,10 +3,14 @@
   "services": [
     {
       "name": "fluxcaler-n8n-staging",
-      "image": "n8nio/n8n:latest",
+      "image": "n8nio/n8n:2.48.7@sha256:fabce3e9678a07d2dde83bd8f5124017f3ec457d0a3fc6b63bb4cec465d63861",
       "internalPort": 5678,
       "isMain": true,
       "environment": [
+        {
+          "key": "N8N_RUNNERS_TASK_TIMEOUT",
+          "value": "300"
+        },
         {
           "key": "N8N_PORT",
           "value": "5678"

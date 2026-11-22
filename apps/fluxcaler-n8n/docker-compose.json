@@ -3,21 +3,13 @@
   "services": [
     {
       "name": "fluxcaler-n8n",
-      "image": "n8nio/n8n:latest",
+      "image": "n8nio/n8n:2.48.7@sha256:fabce3e9678a07d2dde83bd8f5124017f3ec457d0a3fc6b63bb4cec465d63861",
       "internalPort": 5678,
       "isMain": true,
       "environment": [
         {
-          "key": "N8N_BASIC_AUTH_ACTIVE",
-          "value": "true"
-        },
-        {
-          "key": "N8N_BASIC_AUTH_USER",
-          "value": "${N8N_BASIC_AUTH_USER}"
-        },
-        {
-          "key": "N8N_BASIC_AUTH_PASSWORD",
-          "value": "${N8N_BASIC_AUTH_PASSWORD}"
+          "key": "N8N_RUNNERS_TASK_TIMEOUT",
+          "value": "300"
         },
         {
           "key": "GENERIC_TIMEZONE",

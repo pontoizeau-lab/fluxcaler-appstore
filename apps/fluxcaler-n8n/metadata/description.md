@@ -25,8 +25,6 @@ n8n est une plateforme d'automatisation de workflows open-source et auto-héberg
 
 | Variable | Description | Défaut |
 |----------|-------------|--------|
-| `N8N_BASIC_AUTH_USER` | Utilisateur admin | admin |
-| `N8N_BASIC_AUTH_PASSWORD` | Mot de passe admin | (généré) |
 | `GENERIC_TIMEZONE` | Fuseau horaire | Europe/Paris |
 | `WEBHOOK_URL` | URL externe pour webhooks | (optionnel) |
 

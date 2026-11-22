@@ -189,8 +189,6 @@ Pour une intégration optimale, installez les apps dans cet ordre :
 
 | Paramètre | Recommandation |
 |-----------|----------------|
-| `N8N_BASIC_AUTH_USER` | `admin` |
-| `N8N_BASIC_AUTH_PASSWORD` | Générer |
 | `GENERIC_TIMEZONE` | `Europe/Paris` |
 | `WEBHOOK_URL` | URL externe si webhooks publics |
 

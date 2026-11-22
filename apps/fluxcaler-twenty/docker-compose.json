@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fluxcaler-twenty",
-      "image": "twentycrm/twenty:latest",
+      "image": "twentycrm/twenty:v2.59.3@sha256:1a1e8a8db27fef92227e2817678968a17795d586c241be257c3c6305c65706a6",
       "internalPort": 3000,
       "isMain": true,
       "dependsOn": ["fluxcaler-twenty-db", "fluxcaler-twenty-redis"],
@@ -34,7 +34,7 @@
     },
     {
       "name": "fluxcaler-twenty-worker",
-      "image": "twentycrm/twenty:latest",
+      "image": "twentycrm/twenty:v2.59.3@sha256:1a1e8a8db27fef92227e2817678968a17795d586c241be257c3c6305c65706a6",
       "internalPort": 3000,
       "isMain": false,
       "command": ["yarn", "worker:prod"],

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fluxcaler-nocobase",
-      "image": "nocobase/nocobase:latest",
+      "image": "nocobase/nocobase:2.2.49@sha256:b620b1558ba5ac11f092dbc50bb8855d6c75e18829f28243f7a42e8081d502e2",
       "internalPort": 80,
       "isMain": true,
       "dependsOn": ["fluxcaler-nocobase-db"],
