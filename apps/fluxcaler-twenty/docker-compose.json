@@ -56,7 +56,7 @@
     },
     {
       "name": "fluxcaler-twenty-db",
-      "image": "postgres:16-alpine",
+      "image": "postgres:16-alpine@sha256:f2f98726820d0342055351c6e9d36e705f5bfffb3dd53ff556325114b08afb6d",
       "internalPort": 5432,
       "isMain": false,
       "environment": [
@@ -79,7 +79,7 @@
     },
     {
       "name": "fluxcaler-twenty-redis",
-      "image": "redis:7-alpine",
+      "image": "redis:7-alpine@sha256:8da19c7399dca900c6822a1cf30f9d2285585e2c4b457ff4095b0f4500054d3f",
       "internalPort": 6379,
       "isMain": false,
       "command": ["redis-server", "--maxmemory-policy", "noeviction"],
